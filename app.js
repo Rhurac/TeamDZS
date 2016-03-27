@@ -17,7 +17,14 @@ app.use(sessions({
   activeDuration: 1000*60*5
 }));
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/helpers'));
+app.use(express.static(__dirname + '/views'));
+
+var index = require('./controllers/index');
+app.get('/', index.home);
+app.get('/home', index.home);
+app.get('/about', index.about);
+app.get('/contact', index.contact);
+// app.get('/users', adminOnly, index.users);
 
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
