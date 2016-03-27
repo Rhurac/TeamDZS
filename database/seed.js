@@ -7,7 +7,7 @@ db.serialize(function() {
 
   // Users: id, username, fname, lname, email, admin, blocked, password_digest, salt
   db.run("CREATE TABLE if not exists users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
-  
+
   // creating a default user
   var salt = encryption.salt();
    db.run("INSERT INTO users (username, fname, lname, admin, blocked, password_digest, salt) values (?,?,?,?,?,?,?)",
@@ -26,7 +26,7 @@ db.serialize(function() {
 
   // Questions: id, body, date, userid
   // Comment: id, qid, userid, body, date
-  db.run("CREATE TABLE if not exists Questions(id INTEGER PRIMARY KEY, body TEXT NOT NULL, date TEXT NOT NULL, userid INTEGER,  FOREIGN KEY(userid) REFERENCES users(id))");
+  db.run("CREATE TABLE if not exists Questions(id INTEGER PRIMARY KEY, course VARCHAR(6), body TEXT NOT NULL, date TEXT NOT NULL, userid INTEGER,  FOREIGN KEY(userid) REFERENCES users(id))");
   db.run("CREATE TABLE if not exists Comment(id INTEGER PRIMARY KEY, qid INTEGER NOT NULL, userid INTEGER, body TEXT, date TEXT NOT NULL, FOREIGN KEY(userid) REFERENCES users(id), FOREIGN KEY(qid) REFERENCES Questions(id))");
 
 
