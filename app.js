@@ -16,6 +16,7 @@ app.use(sessions({
   duration: 24*60*60*1000,
   activeDuration: 1000*60*5
 }));
+app.use(express.static(__dirname + '/client'));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/views'));
 
