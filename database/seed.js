@@ -7,7 +7,7 @@ db.serialize(function() {
 
   // Users: id, username, fname, lname, email, admin, blocked, password_digest, salt
   db.run("CREATE TABLE if not exists users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
-  
+
   // creating a default user
   var salt = encryption.salt();
    db.run("INSERT INTO users (username, fname, lname, admin, blocked, password_digest, salt) values (?,?,?,?,?,?,?)",
@@ -35,6 +35,7 @@ db.serialize(function() {
   db.each("SELECT * FROM users", function(err, row){
     if(err) return console.error(err);
     console.log(row);
+    console.log("Exit");
   });
 
 });
