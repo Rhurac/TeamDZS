@@ -1,11 +1,18 @@
 $('document').ready(function(){
-  $('#home').click(toggleActive);
-  $('#about').click(toggleActive);
-  $('#contact').click(toggleActive);
-  $('#users').click(toggleActive);
-
-  function toggleActive(){
-    $("li[class='active']").removeClass();
-    $(this).parent().addClass('active');
-  }
+  setCurrentNavActive();
 });
+
+function setCurrentNavActive(){
+  if (window.location.pathname == '/home'){
+    $('#home').closest('li').attr('class', 'active');
+  }
+  else if (window.location.pathname == '/about'){
+    $('#about').closest('li').attr('class', 'active');
+  }
+  else if (window.location.pathname == '/contact'){
+    $('#contact').closest('li').attr('class', 'active');
+  }
+  else if (window.location.pathname == '/users'){
+    $('#users').closest('li').attr('class', 'active');
+  }
+}
