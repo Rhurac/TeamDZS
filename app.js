@@ -2,7 +2,8 @@ var express = require('express'),
   app = express(),
   favicon = require('serve-favicon'),
   handlebars = require('express-handlebars').create({ defaultLayout:'main' }),
-  sessions = require('client-sessions');
+  sessions = require('client-sessions'),
+  collateFilteredQuestions = require('./middlewares/collateFilteredQuestions');
 // var db = require('./database/seed');
 
 app.disable('x-powered-by');
@@ -22,7 +23,7 @@ app.use(express.static(__dirname + '/views'));
 
 var index = require('./controllers/index');
 app.get('/', index.home);
-app.get('/home', index.home);
+app.get('/home', collateFilteredQuestions, index.home);
 app.get('/about', index.about);
 app.get('/contact', index.contact);
 // app.get('/users', adminOnly, index.users);

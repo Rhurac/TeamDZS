@@ -24,6 +24,11 @@ db.serialize(function() {
 
   db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 526', 5, 3, 'How old is Sigourney Weaver?', 'Hello Universe', 'djbamba', CURRENT_TIMESTAMP, 'sagar5589')");
 
+  db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 301', 1, 3, 'How old is Mel Gibson?', 'Short Description', 'None', CURRENT_TIMESTAMP, 'zcleary1')");
+
+  db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 526', 5, 3, 'How deep is the ocean?', 'Hello Universe', 'None', CURRENT_TIMESTAMP, 'zcleary1')");
+
+
 
   // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
   var salt = encryption.salt();
