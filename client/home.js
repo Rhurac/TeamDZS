@@ -15,4 +15,7 @@ function setCurrentTabActive(){
   else if (window.location.href.split('?')[1] == 'activeTab=answered'){
     $('#answered').closest('li').attr('class', 'active');
   }
+  else{
+    $('#date').closest('li').attr('class', 'active');
+  }
 }

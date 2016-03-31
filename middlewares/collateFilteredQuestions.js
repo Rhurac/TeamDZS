@@ -14,14 +14,20 @@ function collateFilteredQuestions(req, res, next) {
       next();
     });
   }
-  if(req.query.activeTab == 'active'){
+  else if(req.query.activeTab == 'active'){
     db.all("SELECT * FROM Questions WHERE answeredBy = ?", 'None', function(err, filtered){
       res.locals.questions = filtered;
       next();
     });
   }
-  if(req.query.activeTab == 'answered'){
+  else if(req.query.activeTab == 'answered'){
     db.all('SELECT * FROM Questions WHERE answeredBy != ?', 'None', function(err, filtered){
+      res.locals.questions = filtered;
+      next();
+    });
+  }
+  else{
+    db.all('SELECT * FROM Questions ORDER BY date DESC', function(err, filtered){
       res.locals.questions = filtered;
       next();
     });
