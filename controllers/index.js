@@ -15,6 +15,10 @@ var index = {
   //   });
   // },
 
+  landing: function(req, res){
+    res.render('index/landing', { layout: "landing"});
+  },
+
   home: function(req, res){
     // need req.session.user here; this is a dummy value for now
     var username = 'sagar5589';

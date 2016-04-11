@@ -1,0 +1,16 @@
+<div id="container" style="margin: 75px auto 0 auto;">
+  <h1 id="login_header">Wildcat Tutors</h1>
+  <h2 id="login_subheader">Please <span><a id="signinBtn">sign in</a></span> or <span><a id="signupBtn">sign up</a></span> to continue...</h2>
+</div>
+<div id="loginFormAnchor" class="container"></div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#signinBtn").click(function(){
+      $.get("/sessions/new", function(data){
+        $("#loginFormAnchor").html(data);
+      });
+    });
+  });
+</script>

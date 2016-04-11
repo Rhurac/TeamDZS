@@ -1,5 +1,6 @@
 var express = require('express'),
   app = express(),
+  path = require('path'),
   favicon = require('serve-favicon'),
   handlebars = require('express-handlebars').create({ defaultLayout:'main' }),
   sessions = require('client-sessions'),
@@ -13,20 +14,25 @@ app.set('port', process.env.PORT || 3000);
 app.use(favicon(__dirname + '/public/images/powercat.png'));
 app.use(sessions({
   cookieName: 'session',
-  secret: 'somerandomstring',
+  secret: 'StarCraftKittens1986',
   duration: 24*60*60*1000,
   activeDuration: 1000*60*5
 }));
-app.use(express.static(__dirname + '/client'));
-app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(path.join(__dirname, "/client")));
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "/views")));
 
 var index = require('./controllers/index');
-app.get('/', index.home);
+app.get('/login', index.landing);
+app.get('/', index.landing);
 app.get('/home', collateFilteredQuestions, index.home);
 app.get('/about', index.about);
 app.get('/contact', index.contact);
 // app.get('/users', adminOnly, index.users);
+
+var sessions = require('./controllers/sessions');
+app.get('/sessions/new', sessions.new);
+app.post('/sessions/create', sessions.create);
 
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
