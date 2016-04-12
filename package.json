@@ -26,6 +26,7 @@
   "homepage": "https://github.com/Rhurac/students-helping-students#readme",
   "dependencies": {
     "client-sessions": "^0.7.0",
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "formidable": "^1.0.17",
