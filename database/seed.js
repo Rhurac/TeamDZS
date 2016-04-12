@@ -40,7 +40,7 @@ db.serialize(function() {
     'sagar5589@ksu.edu',
     true,
     false,
-    encryption.digest('123456' + salt),
+    encryption.digest('password' + salt),
     salt
   );
 });
