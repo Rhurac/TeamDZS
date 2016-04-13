@@ -1,7 +1,8 @@
+"use strict"
 var db = require('../db');
 
-var comments = {
+class Comment{
 
-};
+}
 
-module.exports = exports = comments;
+module.exports = exports = new Comment();

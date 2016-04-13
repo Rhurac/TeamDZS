@@ -1,6 +1,7 @@
+"use strict"
 var db = require('../db');
 
-var index = {
+class Index{
 
   // home: function(req, res){
   //   db.all('SELECT * FROM questions ORDER BY rating DESC', function(err, allQuestions){
@@ -15,11 +16,11 @@ var index = {
   //   });
   // },
 
-  landing: function(req, res){
+  landing(req, res){
     res.render('index/landing', { layout: "landing"});
-  },
+  }
 
-  home: function(req, res){
+  home(req, res){
     // need req.session.user here; this is a dummy value for now
     var username = 'sagar5589';
     db.all('SELECT * FROM questions WHERE author = ?', username, function(err, myQuestions){
@@ -28,15 +29,15 @@ var index = {
         res.render('index/home', { username: username, picture: picture, questions: res.locals.questions, myQuestions: myQuestions });
       });
     });
-  },
+  }
 
-  about: function(req, res){
+  about(req, res){
     res.render('index/about');
-  },
+  }
 
-  contact: function(req, res){
+  contact(req, res){
     res.render('index/contact');
   }
-};
+}
 
-module.exports = exports = index;
+module.exports = exports = new Index();
