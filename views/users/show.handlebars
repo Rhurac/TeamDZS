@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="/css/users.show.css" />
 
-<form id="showUserForm" class="col-sm-offset-4 col-sm-4" action="/users/{{user.id}}/update" method="POST">
+<form id="showUserForm" class="col-sm-offset-4 col-sm-4" action="/users/{{user.id}}/update" method="POST" enctype="multipart/form-data">
   <fieldset class="form-group">
     <label for="fname">First name</label>
     <input name="fname" type="text" class="form-control" id="fname" placeholder="Enter first name" value={{user.fname}}>
