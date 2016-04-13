@@ -19,6 +19,7 @@ class User {
   create(req, res){
     var form = formidable.IncomingForm();
     form.parse(req, function(err, fields, files){
+      console.log("foo");
       if(err) return console.error(err);
       var salt = encryption.salt();
 
@@ -54,8 +55,10 @@ class User {
   }
 
   update(req, res){
-    var form = formidable.IncomingForm();
+    var form = formidable.IncomingForm({ uploadDir: __dirname + "/../public/images"});
     form.parse(req, function(err, fields, files){
+      console.log("inside form.parse");
+      res.end(util.inspect({fields: fields, files: files}));
       if(err) return console.error(err);
       db.run("UPDATE users SET username=?, fname=?, lname=?, email=?, admin=?, blocked=?, password_digest=? WHERE id=?",
         fields.username,
@@ -65,8 +68,11 @@ class User {
         fields.admin,
         fields.blocked,
         fields.password,
+        req.params.id,
         function(err){
           if(err) return console.err(err, "Error while updating table users.");
+          console.log("after db.run");
+          return res.redirect("/users/index");
       });
     });
   }
