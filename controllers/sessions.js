@@ -1,13 +1,14 @@
+"use strict"
 var db = require('../db'),
   formidable = require('formidable'),
   encryption = require('../database/encryption');
 
-var sessions = {
-  new: function(req, res){
+class Session {
+  new(req, res){
     res.render("sessions/new", {layout: "landing"});
-  },
+  }
 
-  create: function(req, res){
+  create(req, res){
     req.session.reset();
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files){
@@ -22,6 +23,6 @@ var sessions = {
       });
     });
   }
-};
+}
 
-module.exports = exports = sessions;
+module.exports = exports = new Session();

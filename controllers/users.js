@@ -1,21 +1,22 @@
+"use strict"
 var db = require('../db'),
   formidable = require('formidable'),
   encryption = require("../database/encryption"),
   fs = require("fs");
 
 
-var users = {
-  index: function(req, res){
+class User {
+  index(req, res){
     db.all("SELECT * FROM users", function(err, all){
       res.render("users/index", {users: all});
     });
-  },
+  }
 
-  new: function(req, res){
+  new(req, res){
     res.render("users/new", {layout:"landing"});
-  },
+  }
 
-  create: function(req, res)  {
+  create(req, res){
     var form = formidable.IncomingForm();
     form.parse(req, function(err, fields, files){
       console.log("foo");
@@ -44,16 +45,16 @@ var users = {
     });
     return res.redirect("/home");
   });
-},
+}
 
-  show: function(req, res){
+  show(req, res){
     db.get("SELECT * FROM users WHERE username = ?", req.query.username, function(err, user){
       if(err) return console.error("Error retrieving data from table users.");
       return res.render("users/show", {user: user});
     });
-  },
+  }
 
-  update: function(req, res){
+  update(req, res){
     var form = formidable.IncomingForm({ uploadDir: __dirname + "/../public/images"});
     form.parse(req, function(err, fields, files){
       console.log("inside form.parse");
@@ -75,6 +76,6 @@ var users = {
       });
     });
   }
-};
+}
 
-module.exports = exports = users;
+module.exports = exports = new User();
