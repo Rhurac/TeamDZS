@@ -7,7 +7,7 @@
     "unsafe-perm": true
   },
   "scripts": {
-    "install": "node ./database/seed.js",
+    "seed": "node ./database/seed.js",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
