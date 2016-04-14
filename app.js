@@ -41,6 +41,8 @@ app.post("/users/create", users.create);
 app.get("/users/show", users.show);
 app.post("/users/:id/update", users.update);
 
+app.get("/users/:userName", users.profile);
+
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
 });

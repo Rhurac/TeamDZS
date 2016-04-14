@@ -100,6 +100,19 @@ class User {
       });
     });
   }
+
+  profile(req, res){
+      console.log("Username: "+req.params.userName);
+      db.get("SELECT * FROM users WHERE username = ?",req.params.userName, function(err, user){
+         if(err){
+             console.error("Error in Users.profile", err);
+             return res.sendStatus(500).send("No such user.");
+         }
+        console.log("Username: %s", user.username)
+        res.render('users/profile', {user : user});
+
+      });
+  }
 }
 
 module.exports = exports = new User();
