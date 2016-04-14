@@ -14,7 +14,7 @@ class Session {
     form.parse(req, function(err, fields, files){
       if(err) return res.sendStatus(500);
       db.get("SELECT * FROM users WHERE email = ?", fields.email, function(err, user){
-        console.log(encryption.digest(fields.password + user.salt));
+    //    console.log(encryption.digest(fields.password + user.salt));
         if(err) return res.render('sessions/new', {layout:"landing",message: "Email/Password1 combination not found.", user: req.user});
         if(!user) return res.render('sessions/new', {layout:"landing",message: "Email/Password2 combination not found.", user: req.user});
         if(user.password_digest != encryption.digest(fields.password + user.salt)) return res.render('sessions/new', {layout:"landing",message: "Email/Password3 combination not found.", user: req.user});
