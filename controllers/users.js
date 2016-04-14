@@ -18,33 +18,21 @@ class User {
   }
 
   create(req, res){
-    var form = formidable.IncomingForm();
-    form.parse(req, function(err, fields, files){
-      if(err) return console.error(err);
-      var salt = encryption.salt();
-
-      db.serialize(function(){
-        db.get("SELECT * FROM users WHERE username = ?", fields.username, function(err, row){
-          if(err) return console.error("There was an error while processing your request.");
-          if(row){
-            return("username");
-          }
-        });
-
-        db.run("INSERT INTO users (fname, lname, picture, username, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
-        fields.fname,
-        fields.lname,
-        "/images/zerg.png",
-        fields.username,
-        fields.email,
-        false,
-        false,
-        encryption.digest(fields.password + salt),
-        salt
-      );
-    });
-    return res.redirect("/home");
-  });
+    var salt = encryption.salt();
+    var fields = res.locals.fields;
+    db.run("INSERT INTO users (fname, lname, picture, username, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
+    fields.fname,
+    fields.lname,
+    "/images/zerg.png",
+    fields.username,
+    fields.email,
+    false,
+    false,
+    encryption.digest(fields.password + salt),
+    salt
+    );
+    res.render("index/landing", {layout: "landing", message: "User " + fields.username + " created!"});
+    // return res.redirect("/sessions/delete");
 }
 
   show(req, res){
