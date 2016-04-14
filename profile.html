@@ -8,23 +8,91 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width; initial-scale=1">
 
-		<title>profile</title>
+		<title>Daniel Bamba</title>
 		<meta name="description" content="">
 		<meta name="author" content="Daniel Bamba">
 
-		
+
 
 		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
 		<link rel="shortcut icon" href="/favicon.ico">
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link href='https://fonts.googleapis.com/css?family=PT+Sans:700italic,400' rel='stylesheet' type='text/css'>
+
+		<style>
+
+		/*gray: #919194
+		purp: #5a2b81 */
+			div{
+				border: 1px solid red;
+			}
+			body{
+				font-family:'PT Sans', sans-serif;
+			}
+			.body{
+				background-color: #919194;
+			}
+			.left-nav{
+				background-color: #5a2b81 ;
+			}
+			.img-circle{
+				height:140px;
+				width:140px;
+				border:3px solid #5a2b81;
+			}
+			.purple-bold{
+				color:#5a2b81;
+				font-weight:700;
+				font-size:large;
+			}
+
+		</style>
 	</head>
 
 	<body>
 		<div class="container-fluid">
-			
-			<p>TEST TEST TEST</p>
-			
+
+
+			<div class="row-fluid">
+				<!-- Left nav section -->
+				<div class="col-md-2 left-nav">
+					What does this look like
+
+					<ul class="list-unstyled text-center">
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Not Home</a></li>
+						<li><a href="#">Phone Home</a></li>
+						<li><a href="#">No Home Phone</a></li>
+					</ul>
+
+				</div>
+				<!-- End of nav -->
+
+				<!-- Body section -->
+				<div class="col-md-10 body">
+					<div class="row-fluid">
+
+						<div class="col-md-6">
+							<p class="text-center purple-bold">
+								<b>djbamba</b>
+							</p>
+							<div class="col-md-12 center-block">
+								<img class="img-responsive img-circle" src="public/images/terran.png" alt="Terran"/>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<ul class="list-unstyled">
+								<li>Name:xxxx</li>
+								<li>Posts:xxxx</li>
+								<li>Email:xxxx</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- End of Body Section -->
+			</div>
+
 		</div>
 	</body>
 </html>
