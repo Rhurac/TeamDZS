@@ -23,6 +23,11 @@ class Session {
       });
     });
   }
+
+  delete(req, res){
+    req.session.reset();
+    return res.redirect("/");
+  }
 }
 
 module.exports = exports = new Session();

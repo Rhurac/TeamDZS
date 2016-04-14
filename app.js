@@ -4,7 +4,8 @@ var express = require('express'),
   favicon = require('serve-favicon'),
   handlebars = require('express-handlebars').create({ defaultLayout:'main' }),
   sessions = require('client-sessions'),
-  collateFilteredQuestions = require('./middlewares/collateFilteredQuestions');
+  collateFilteredQuestions = require('./middlewares/collateFilteredQuestions'),
+  check_if_user_exists = require("./middlewares/check_if_user_exists");
 // var db = require('./database/seed');
 
 app.disable('x-powered-by');
@@ -33,11 +34,12 @@ app.get('/contact', index.contact);
 var sessions = require('./controllers/sessions');
 app.get('/sessions/new', sessions.new);
 app.post('/sessions/create', sessions.create);
+app.get("/sessions/delete", sessions.delete);
 
 var users = require("./controllers/users");
 app.get("/users/index", users.index);
 app.get("/users/new", users.new);
-app.post("/users/create", users.create);
+app.post("/users/create", check_if_user_exists, users.create);
 app.get("/users/show", users.show);
 app.post("/users/:id/update", users.update);
 
