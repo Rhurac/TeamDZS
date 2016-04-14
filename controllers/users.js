@@ -55,10 +55,34 @@ class User {
   }
 
   update(req, res){
-    var form = formidable.IncomingForm({ uploadDir: __dirname + "/../public/images"});
+    var form = formidable.IncomingForm();
+    var path = "";
+    var parent = "";
+    var name = "";
+    console.log(form);
+    form.on("file", function(field, file){
+      form.uploadDir = __dirname + "/../public/images";
+      console.log(form.uploadDir);
+      path = file.path;
+      parent = file.path.split("upload")[0];
+      name = file.name;
+      req.resume();
+    });
+    form.on("error", function(err){
+      console.log("An error has occurred during the form upload.");
+      console.error(err);
+      req.resume();
+    });
+    form.on("aborted", function(err){
+      console.log("User aborted the upload.");
+      console.log(err);
+      req.resume();
+    });
+    form.on("end", function(){
+      console.log("upload complete");
+      req.resume();
+    });
     form.parse(req, function(err, fields, files){
-      console.log("inside form.parse");
-      res.end(util.inspect({fields: fields, files: files}));
       if(err) return console.error(err);
       db.run("UPDATE users SET username=?, fname=?, lname=?, email=?, admin=?, blocked=?, password_digest=? WHERE id=?",
         fields.username,
@@ -71,7 +95,7 @@ class User {
         req.params.id,
         function(err){
           if(err) return console.err(err, "Error while updating table users.");
-          console.log("after db.run");
+          fs.renameSync(path, parent + name);
           return res.redirect("/users/index");
       });
     });
