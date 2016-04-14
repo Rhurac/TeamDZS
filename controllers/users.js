@@ -66,22 +66,44 @@ class User {
       return;
     });
     form.parse(req, function(err, fields, files){
-      if(err) return console.error(err);
-      db.run("UPDATE users SET username=?, fname=?, lname=?, picture=?, email=?, admin=?, blocked=?, password_digest=? WHERE id=?",
-        fields.username,
-        fields.fname,
-        fields.lname,
-        file_name,
-        fields.email,
-        fields.admin,
-        fields.blocked,
-        fields.password,
-        req.params.id,
-        function(err){
-          if(err) return console.err(err, "Error while updating table users.");
-          // fs.renameSync(path, parent + name);
-          return res.redirect("/users/index");
+      if(err) return res.sendStatus(500) && console.error(err, "Error parsing incoming form.");
+      db.get("SELECT * FROM users WHERE id = ?", req.params.id, function(err, user){
+        if(err) return res.sendStatus(500) && console.error(err, "Error querying table 'users'.");
+        var salt = encryption.salt();
+        var password = user.password_digest;
+        var picture = user.picture;
+        console.log("picture before: " + user.picture);
+        if(user.salt) salt = user.salt;
+        if(fields.password) password = encryption.digest(fields.password + salt);
+        if(file_name.length > 3) picture = "/images/" + file_name;
+        console.log("file_name: " + file_name);
+        db.run("UPDATE users SET username=?, fname=?, lname=?, picture=?, email=?, admin=?, blocked=?, password_digest=?, salt=? WHERE id=?",
+          fields.username,
+          fields.fname,
+          fields.lname,
+          picture,
+          fields.email,
+          fields.admin,
+          fields.blocked,
+          password,
+          salt,
+          req.params.id,
+          function(err){
+            if(err) return console.err(err, "Error while updating table users.");
+            return res.redirect("/users/index");
+        });
       });
+
+
+
+
+    });
+  }
+
+  delete(req, res){
+    db.run("DELETE FROM users WHERE id = ?", req.params.id, function(err){
+      if(err) return res.sendStatus(500) && console.error(err, "error while querying table 'users'");
+      res.redirect("/users/index");
     });
   }
 }
