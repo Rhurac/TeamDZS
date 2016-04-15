@@ -1,4 +1,3 @@
-<!-- <link rel="stylesheet" href="/css/signin.css"> -->
 <div class="container" >
   <h1> Welcome to CIS{{courseID}} </h1>
   <p> {{#each questions}}
@@ -6,10 +5,40 @@
       {{/each}} </p>
   <form class="questions" action="/questions/{{courseID}}" method="post">
     <h2 class="form-signin-heading"></h2>
-    <!-- temp = url. -->
-    <!-- <input name="course" type="text" id="inputEmail" class="form-control" placeholder="Email address" required autofocus> -->
     <input name="short" type="text" id="short" class="form-control" placeholder="Write a Short description" required>
     <input name="question" type="text" id="question" class="form-control" placeholder="Write a question" required>
     <button class="btn btn-lg btn-success btn-block" type="submit">Post</button>
   </form>
 </div>
+<!-- <body>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-3">
+        <p class="lead">{{username}}</p>
+        <img src={{picture}} alt="zerg" width="200" height="auto">
+        <h4>Questions I've Asked:</h4>
+        <div class="list-group">
+          {{#each myQuestions}}
+            <a href="#" class="list-group-item">{{shortdesc}}</a>
+            <br />
+          {{/each}}
+        </div>
+        <h4>Questions I've Answered:</h4>
+        <div class="list-group">
+          {{#each myQuestions}}
+          <a href="#" class="list-group-item">{{shortdesc}}</a>
+          <br />
+          {{/each}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container">
+    <hr>
+    <footer>
+      <p>Team DZS</p>
+    </footer>
+  </div>
+</body> -->
