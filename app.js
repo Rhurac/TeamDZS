@@ -4,9 +4,11 @@ var express = require('express'),
   favicon = require('serve-favicon'),
   handlebars = require('express-handlebars').create({ defaultLayout:'main' }),
   sessions = require('client-sessions'),
+  questions = require('./controllers/questions'),
   collateFilteredQuestions = require('./middlewares/collateFilteredQuestions'),
   check_if_user_exists = require("./middlewares/check_if_user_exists"),
   admin_only = require("./middlewares/admin_only"),
+  noGuests = require("./middlewares/noGuests"),
   load_user = require("./middlewares/load_user");
 // var db = require('./database/seed');
 
@@ -65,6 +67,9 @@ app.post("/questions/:qID/comments",comments.create);
 app.get("/questions/:qID/comments/:cID/delete",comments.delete);
 //app.get('/test', comments.new);
 
+
+app.get("/questions/:courseID", noGuests, questions.new);
+app.post("/questions/:courseID", noGuests, questions.create);
 
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
