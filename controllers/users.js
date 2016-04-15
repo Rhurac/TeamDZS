@@ -117,6 +117,7 @@ class User {
         console.log("Username: %s", user.username);
 
         let allQuestions = {};
+    //    let allComments = {};
 
         db.serialize(function(){
             db.all("SELECT * FROM questions WHERE author=?",user.username, function(err, questions){
@@ -126,12 +127,13 @@ class User {
                 }
                 allQuestions = questions;
             });
-            db.all("SELECT * FROM comments WHERE userid=?",user.userid, function(err, comments){
+            // db.get("SELECT id FROM users WHERE username=?")
+            db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                 if(err){
-                    //res.sendStatus(500);
+                    res.sendStatus(500);
                     return console.error("Error in user.profile comments",err);
                 }
-
+                console.log(JSON.stringify(comments));
                 res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
             });
         });

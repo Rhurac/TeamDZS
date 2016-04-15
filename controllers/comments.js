@@ -21,7 +21,9 @@ class Comment{
                 req.params.id,
                 user.id,
                 fields.description,
-            );
+            ()=>{
+                res.redirect('back');
+            });
 
         });
 
@@ -37,7 +39,8 @@ class Comment{
 
     delete(req, res){
         db.run("DELETE FROM comments WHERE id=?",req.params.cID);
-        res.redirect("/questions/"+req.params.qID+"/comments");
+        // "/questions/"+req.params.qID+"/comments"
+        res.redirect('back');
     }
 }
 
