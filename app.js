@@ -56,16 +56,15 @@ app.post("/users/create", check_if_user_exists, users.create);
 app.get("/users/show", admin_only, users.show);
 app.post("/users/:id/update", users.update);
 app.get("/users/:id/delete", admin_only, users.delete);
-
-<<<<<<< HEAD
+app.get("/users/:userName", users.profile);
 /*
 Comment Routes
 */
 var comments = require("./controllers/comments");
+app.post("/questions/:qID/comments",comments.create);
+app.get("/questions/:qID/comments/:cID/delete",comments.delete);
 //app.get('/test', comments.new);
-=======
-app.get("/users/:userName", users.profile);
->>>>>>> user-profile
+
 
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');

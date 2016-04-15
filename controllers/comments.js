@@ -17,11 +17,10 @@ class Comment{
                 res.sendStatus(500);
                 return console.error("Error in Comment create.\n",err);
             }
-            db.run("INSERT INTO comments (qId, userId, desc, date) VALUES (?,?,?,?)",
+            db.run("INSERT INTO comments (qId, userId, desc, date) VALUES (?,?,?,CURRENT_TIMESTAMP)",
                 req.params.id,
                 user.id,
                 fields.description,
-                CURRENT_TIMESTAMP
             );
 
         });
@@ -36,8 +35,9 @@ class Comment{
 
     }
 
-    destroy(req, res){
-        db.run("DELETE FROM comments WHERE id=?",req.params.id, );
+    delete(req, res){
+        db.run("DELETE FROM comments WHERE id=?",req.params.cID);
+        res.redirect("/questions/"+req.params.qID+"/comments");
     }
 }
 

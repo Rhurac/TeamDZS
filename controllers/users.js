@@ -117,7 +117,6 @@ class User {
         console.log("Username: %s", user.username);
 
         let allQuestions = {};
-        let allComments = {};
 
         db.serialize(function(){
             db.all("SELECT * FROM questions WHERE author=?",user.username, function(err, questions){
