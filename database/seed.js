@@ -8,14 +8,67 @@ db.serialize(function() {
   // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
   db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, picture TEXT, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
 
-  // TABLE QUESTIONS: id, course, rating, numOfReviews, shortdesc, desc, answeredBy, date, userid
-  db.run("CREATE TABLE IF NOT EXISTS Questions(id INTEGER PRIMARY KEY, course VARCHAR(6), rating INTEGER, numOfReviews INTEGER, shortdesc TEXT NOT NULL, desc TEXT NOT NULL, answeredBy TEXT, author TEXT NOT NULL, date TEXT NOT NULL, FOREIGN KEY(author) REFERENCES users(id))");
+
+   // POPULATE USERS *****************************************
+  var salt = encryption.salt();
+   db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
+    'sagar5589',
+    'Sagar',
+    'Mehta',
+    '/images/protoss.png',
+    'sagar5589@ksu.edu',
+    true,
+    false,
+    encryption.digest('password' + salt),
+    salt
+  );
+  db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
+   'Rhurac',
+   'Zachary',
+   'Cleary',
+   '/images/zerg.png',
+   'zcleary1@ksu.edu',
+   true,
+   false,
+   encryption.digest('password' + salt),
+   salt
+ );
+ db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
+  'jcleary1',
+  'Jacob',
+  'Cleary',
+  '/images/terran.png',
+  'jcleary1@ksu.edu',
+  false,
+  true,
+  encryption.digest('password' + salt),
+  salt
+);
+db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
+ 'djbamba',
+ 'Daniel',
+ 'Bamba',
+ '/images/zerg.png',
+ 'djbamba@ksu.edu',
+ true,
+ false,
+ encryption.digest('password' + salt),
+ salt
+);
+
 
   // TABLE COMMENTS: id, qid, userid, body, date
   db.run("CREATE TABLE IF NOT EXISTS Comments(id INTEGER PRIMARY KEY, qid INTEGER NOT NULL, userid INTEGER, desc TEXT NOT NULL, date TEXT NOT NULL, FOREIGN KEY(userid) REFERENCES users(id), FOREIGN KEY(qid) REFERENCES Questions(id))");
 
+  // POPULATE COMMENTS *****************************************
+  db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (1, 4, 'We never went over this part in class.',CURRENT_TIMESTAMP)");
+  db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (2, 1, 'Take I70 West for 6 hours',CURRENT_TIMESTAMP)");
+  db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (3, 2, 'I'm more attracted to moons.',CURRENT_TIMESTAMP)");
+  db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (4, 3, 'Deepest point is ~7 miles.',CURRENT_TIMESTAMP)");
+  // TABLE QUESTIONS: id, course, rating, numOfReviews, shortdesc, desc, answeredBy, date, userid
+  db.run("CREATE TABLE IF NOT EXISTS Questions(id INTEGER PRIMARY KEY, course VARCHAR(6), rating INTEGER, numOfReviews INTEGER, shortdesc TEXT NOT NULL, desc TEXT NOT NULL, answeredBy TEXT, author TEXT NOT NULL, date TEXT NOT NULL, FOREIGN KEY(author) REFERENCES users(id))");
 
-  // ******* Create some test data ********
+  // POPULATE QUESTIONS *****************************************
   db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 526', 5, 3, 'Why is the sky blue?', 'Hello Universe', 'sagar5589', CURRENT_TIMESTAMP, 'djbamba')");
 
   db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 527', 4, 2, 'How far to the moon?', 'Hello Universe', 'sagar5589', CURRENT_TIMESTAMP, 'djbamba')");
@@ -30,17 +83,5 @@ db.serialize(function() {
 
 
 
-  // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
-  var salt = encryption.salt();
-   db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
-    'sagar5589',
-    'Sagar',
-    'Mehta',
-    '/images/zerg.png',
-    'sagar5589@ksu.edu',
-    true,
-    false,
-    encryption.digest('password' + salt),
-    salt
-  );
+
 });
