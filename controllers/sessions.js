@@ -1,13 +1,14 @@
+"use strict"
 var db = require('../db'),
   formidable = require('formidable'),
   encryption = require('../database/encryption');
 
-var sessions = {
-  new: function(req, res){
+class Session {
+  new(req, res){
     res.render("sessions/new", {layout: "landing"});
-  },
+  }
 
-  create: function(req, res){
+  create(req, res){
     req.session.reset();
     var form = new formidable.IncomingForm();
     form.parse(req, function(err, fields, files){
@@ -16,12 +17,22 @@ var sessions = {
         console.log(encryption.digest(fields.password + user.salt));
         if(err) return res.render('sessions/new', {layout:"landing",message: "Email/Password1 combination not found.", user: req.user});
         if(!user) return res.render('sessions/new', {layout:"landing",message: "Email/Password2 combination not found.", user: req.user});
-        if(user.password_digest != encryption.digest(fields.password + user.salt)) return res.render('sessions/new', {layout:"landing",message: "Email/Password3 combination not found.", user: req.user});
+        if(user.password_digest != encryption.digest(fields.password + user.salt)){
+          console.log(encryption.digest(fields.password + user.salt));
+          console.log(user.password_digest);
+          return res.render('sessions/new', {layout:"landing",message: "Email/Password3 combination not found.", user: req.user});
+        }
+        if(user.blocked) return res.sendStatus(403);
         req.session.user_id = user.id;
         return res.redirect('/home');
       });
     });
   }
-};
 
-module.exports = exports = sessions;
+  delete(req, res){
+    req.session.reset();
+    return res.redirect("/");
+  }
+}
+
+module.exports = exports = new Session();

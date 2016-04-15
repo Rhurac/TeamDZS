@@ -13,3 +13,7 @@ button[type="submit"] {
 #userID {
   display: none;
 }
+
+#deleteAccountBtn{
+  margin-right: 5px;
+}

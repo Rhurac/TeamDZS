@@ -1,7 +1,8 @@
+"use strict"
 var db = require('../db');
 
-var questions = {
+class Question{
 
-};
+}
 
-module.exports = exports = questions;
+module.exports = exports = new Question();
