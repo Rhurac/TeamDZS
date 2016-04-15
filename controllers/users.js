@@ -114,8 +114,30 @@ class User {
              console.error("Error in Users.profile", err);
              return res.sendStatus(500).send("No such user.");
          }
-        console.log("Username: %s", user.username)
-        res.render('users/profile', {user : user});
+        console.log("Username: %s", user.username);
+
+        let allQuestions = {};
+        let allComments = {};
+
+        db.serialize(function(){
+            db.all("SELECT * FROM questions WHERE author=?",user.username, function(err, questions){
+                if(err){
+                    res.sendStatus(500);
+                    return console.error("Error in user.profile questions",err);
+                }
+                allQuestions = questions;
+            });
+            db.all("SELECT * FROM comments WHERE userid=?",user.userid, function(err, comments){
+                if(err){
+                    //res.sendStatus(500);
+                    return console.error("Error in user.profile comments",err);
+                }
+
+                res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
+            });
+        });
+
+
 
       });
   }

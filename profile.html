@@ -23,7 +23,8 @@
 		<style>
 
 		/*gray: #919194
-		purp: #5a2b81 */
+		purp: #5a2b81
+		default: #fff */
 			div{
 				border: 1px solid red;
 			}
@@ -31,7 +32,8 @@
 				font-family:'PT Sans', sans-serif;
 			}
 			.body{
-				background-color: #919194;
+				background-color: #fff;
+				padding:0;
 			}
 			.left-nav{
 				background-color: #5a2b81 ;
@@ -44,17 +46,43 @@
 			.purple-bold{
 				color:#5a2b81;
 				font-weight:700;
-				font-size:large;
+				font-size:40px;
 			}
+			.center-vertical{
+				min-height: 20%;
+				min-height: 20vh;
+				display: flex;
+				align-items: center;
+			}
+			#whole-page{
+				padding-right:0;
+			}
+			#main-head{
 
+				padding:0;
+			}
+			#main-card{
+				padding-bottom:10px;
+				border-bottom: 3px solid #5a2b81;
+			}
+			#user-info{
+				padding-right:0;
+				padding-left:4px;
+				/*vertical-align:middle;*/
+			}
+			#userPic{
+				padding-right:0;
+				padding-left:0;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid" id="whole-page">
 
 
 			<div class="row-fluid">
+
 				<!-- Left nav section -->
 				<div class="col-md-2 left-nav">
 					What does this look like
@@ -73,20 +101,35 @@
 				<div class="col-md-10 body">
 					<div class="row-fluid">
 
-						<div class="col-md-6">
+						<div class="col-md-12" id="main-head">
 							<p class="text-center purple-bold">
-								<b>djbamba</b>
+								<b><i>djbamba</i></b>
 							</p>
-							<div class="col-md-12 center-block">
-								<img class="img-responsive img-circle" src="public/images/terran.png" alt="Terran"/>
+							<!-- Username, picture, info here: -->
+							<div class="row-fluid" id="main-card">
+								<div class="row center-vertical center-block" >
+									<div class="col-md-6 col-sm-6" id="userPic">
+										<img class="img-responsive img-circle pull-right" src="public/images/terran.png" alt="Terran"/>
+									</div>
+									<div class="col-md-6 col-sm-6 pull-left" id="user-info">
+										<ul class="list-unstyled" id="infoList">
+											<li><span class="glyphicon glyphicon-envelope"></span> Name:xxxx</li>
+											<li><span class="glyphicon glyphicon-pencil"></span> Posts:xxxx</li>
+											<li><span class="glyphicon glyphicon-phone"></span> Email:xxxx</li>
+										</ul>
+									</div>
+								</div>
 							</div>
+							<!-- Username, picture, info end-->
 						</div>
-						<div class="col-md-6">
-							<ul class="list-unstyled">
-								<li>Name:xxxx</li>
-								<li>Posts:xxxx</li>
-								<li>Email:xxxx</li>
-							</ul>
+					</div>
+
+					<!-- Content section -->
+					<div class="row-fluid main-content">
+						<div class="row-fluid">
+							<div class="col-md-12">
+								<h2>User Questions:</h2>
+							</div>
 						</div>
 					</div>
 				</div>
