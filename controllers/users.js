@@ -106,6 +106,42 @@ class User {
       res.redirect("/users/index");
     });
   }
+
+  profile(req, res){
+      console.log("Username: "+req.params.userName);
+      db.get("SELECT * FROM users WHERE username = ?",req.params.userName, function(err, user){
+         if(err){
+             console.error("Error in Users.profile", err);
+             return res.sendStatus(500).send("No such user.");
+         }
+        console.log("Username: %s", user.username);
+
+        let allQuestions = {};
+    //    let allComments = {};
+
+        db.serialize(function(){
+            db.all("SELECT * FROM questions WHERE author=?",user.username, function(err, questions){
+                if(err){
+                    res.sendStatus(500);
+                    return console.error("Error in user.profile questions",err);
+                }
+                allQuestions = questions;
+            });
+            // db.get("SELECT id FROM users WHERE username=?")
+            db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
+                if(err){
+                    res.sendStatus(500);
+                    return console.error("Error in user.profile comments",err);
+                }
+                console.log(JSON.stringify(comments));
+                res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
+            });
+        });
+
+
+
+      });
+  }
 }
 
 module.exports = exports = new User();
