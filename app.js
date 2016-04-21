@@ -10,7 +10,6 @@ var express = require('express'),
   admin_only = require("./middlewares/admin_only"),
   noGuests = require("./middlewares/noGuests"),
   load_user = require("./middlewares/load_user"),
-
   http = require('http').Server(app),
   socket = require('socket.io'),
   io = socket(http);
