@@ -4,8 +4,6 @@ var db = require('../db'),
 
 class Comment{
 
-
-
     new(req, res){
         res.render("");
     }
