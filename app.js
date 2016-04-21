@@ -9,14 +9,17 @@ var express = require('express'),
   check_if_user_exists = require("./middlewares/check_if_user_exists"),
   admin_only = require("./middlewares/admin_only"),
   noGuests = require("./middlewares/noGuests"),
-  load_user = require("./middlewares/load_user");
-// var db = require('./database/seed');
+  load_user = require("./middlewares/load_user"),
+
+  http = require('http').Server(app),
+  socket = require('socket.io'),
+  io = socket(http);
 
 app.disable('x-powered-by');
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
-app.use(favicon(__dirname + '/public/images/website_logo.png'));
+app.use(favicon(__dirname+'/public/images/website_logo.png'));
 app.use(sessions({
   cookieName: 'session',
   secret: 'StarCraftKittens1986',
@@ -44,10 +47,11 @@ app.get('/contact', index.contact);
 Session Routes
 */
 var sessions = require('./controllers/sessions');
+var chat = require('./controllers/chat');
 app.get('/sessions/new', sessions.new);
 app.post('/sessions/create', sessions.create);
 app.get("/sessions/delete", sessions.delete);
-
+app.get('/chat', chat.chat);
 /*
 User Routes
 */
@@ -66,7 +70,6 @@ var comments = require("./controllers/comments");
 app.post("/questions/:qID/comments",comments.create);
 app.get("/questions/:qID/comments/:cID/delete",comments.delete);
 //app.get('/test', comments.new);
-
 
 app.get("/questions/:courseID", noGuests, questions.new);
 app.post("/questions/:courseID", noGuests, questions.create);
