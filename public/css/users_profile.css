@@ -1,0 +1,52 @@
+/*gray: #919194
+purp: #5a2b81
+default: #fff */
+    div{
+        /*border: 1px solid red;*/
+    }
+    body{
+        font-family:'PT Sans', sans-serif;
+    }
+    .body{
+        background-color: #fff;
+        padding:0;
+    }
+    .left-nav{
+        background-color: #5a2b81;
+    }
+    .img-circle{
+        height:140px;
+        width:140px;
+        border:3px solid #5a2b81;
+    }
+    .purple-bold{
+        color:#5a2b81;
+        font-weight:700;
+        font-size:40px;
+    }
+    .center-vertical{
+        min-height: 20%;
+        min-height: 20vh;
+        display: flex;
+        align-items: center;
+    }
+    #whole-page{
+        padding-right:0;
+    }
+    #main-head{
+
+        padding:0;
+    }
+    #main-card{
+        padding-bottom:10px;
+        border-bottom: 3px solid #5a2b81;
+    }
+    #user-info{
+        padding-right:0;
+        padding-left:4px;
+        /*vertical-align:middle;*/
+    }
+    #userPic{
+        padding-right:0;
+        padding-left:0;
+    }

@@ -2,7 +2,8 @@
 var db = require('../db'),
   formidable = require('formidable'),
   encryption = require("../database/encryption"),
-  fs = require("fs");
+  fs = require("fs-extra");
+
 
 
 class User {
@@ -17,34 +18,21 @@ class User {
   }
 
   create(req, res){
-    var form = formidable.IncomingForm();
-    form.parse(req, function(err, fields, files){
-      console.log("foo");
-      if(err) return console.error(err);
-      var salt = encryption.salt();
-
-      db.serialize(function(){
-        db.get("SELECT * FROM users WHERE username = ?", fields.username, function(err, row){
-          if(err) return console.error("There was an error while processing your request.");
-          if(row){
-            return("username");
-          }
-        });
-
-        db.run("INSERT INTO users (fname, lname, picture, username, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
-        fields.fname,
-        fields.lname,
-        "/images/zerg.png",
-        fields.username,
-        fields.email,
-        false,
-        false,
-        encryption.digest(fields.password + salt),
-        salt
-      );
-    });
-    return res.redirect("/home");
-  });
+    var salt = encryption.salt();
+    var fields = res.locals.fields;
+    db.run("INSERT INTO users (fname, lname, picture, username, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
+    fields.fname,
+    fields.lname,
+    "/images/zerg.png",
+    fields.username,
+    fields.email,
+    false,
+    false,
+    encryption.digest(fields.password + salt),
+    salt
+    );
+    res.render("index/landing", {layout: "landing", message: "User " + fields.username + " created!"});
+    // return res.redirect("/sessions/delete");
 }
 
   show(req, res){
@@ -56,18 +44,7 @@ class User {
 
   update(req, res){
     var form = formidable.IncomingForm();
-    var path = "";
-    var parent = "";
-    var name = "";
-    console.log(form);
-    form.on("file", function(field, file){
-      form.uploadDir = __dirname + "/../public/images";
-      console.log(form.uploadDir);
-      path = file.path;
-      parent = file.path.split("upload")[0];
-      name = file.name;
-      req.resume();
-    });
+    var file_name;
     form.on("error", function(err){
       console.log("An error has occurred during the form upload.");
       console.error(err);
@@ -78,27 +55,92 @@ class User {
       console.log(err);
       req.resume();
     });
-    form.on("end", function(){
-      console.log("upload complete");
-      req.resume();
+    form.on("end", function(fields, files) {
+      var temp_path = this.openedFiles[0].path;
+      file_name = this.openedFiles[0].name;
+      // var file_name = this.openedFiles[0].path.split("tmp")[0] + this.openedFiles[0].name;
+      var new_location = __dirname + "/../public/images/";
+      fs.copy(temp_path, new_location + file_name, function(err) {
+        if(err) console.error(err);
+      });
+      return;
     });
     form.parse(req, function(err, fields, files){
-      if(err) return console.error(err);
-      db.run("UPDATE users SET username=?, fname=?, lname=?, email=?, admin=?, blocked=?, password_digest=? WHERE id=?",
-        fields.username,
-        fields.fname,
-        fields.lname,
-        fields.email,
-        fields.admin,
-        fields.blocked,
-        fields.password,
-        req.params.id,
-        function(err){
-          if(err) return console.err(err, "Error while updating table users.");
-          fs.renameSync(path, parent + name);
-          return res.redirect("/users/index");
+      if(err) return res.sendStatus(500) && console.error(err, "Error parsing incoming form.");
+      db.get("SELECT * FROM users WHERE id = ?", req.params.id, function(err, user){
+        if(err) return res.sendStatus(500) && console.error(err, "Error querying table 'users'.");
+        var salt = encryption.salt();
+        var password = user.password_digest;
+        var picture = user.picture;
+        console.log("picture before: " + user.picture);
+        if(user.salt) salt = user.salt;
+        if(fields.password) password = encryption.digest(fields.password + salt);
+        if(file_name.length > 3) picture = "/images/" + file_name;
+        console.log("file_name: " + file_name);
+        db.run("UPDATE users SET username=?, fname=?, lname=?, picture=?, email=?, admin=?, blocked=?, password_digest=?, salt=? WHERE id=?",
+          fields.username,
+          fields.fname,
+          fields.lname,
+          picture,
+          fields.email,
+          fields.admin,
+          fields.blocked,
+          password,
+          salt,
+          req.params.id,
+          function(err){
+            if(err) return console.err(err, "Error while updating table users.");
+            return res.redirect("/users/index");
+        });
       });
+
+
+
+
     });
+  }
+
+  delete(req, res){
+    db.run("DELETE FROM users WHERE id = ?", req.params.id, function(err){
+      if(err) return res.sendStatus(500) && console.error(err, "error while querying table 'users'");
+      res.redirect("/users/index");
+    });
+  }
+
+  profile(req, res){
+      console.log("Username: "+req.params.userName);
+      db.get("SELECT * FROM users WHERE username = ?",req.params.userName, function(err, user){
+         if(err){
+             console.error("Error in Users.profile", err);
+             return res.sendStatus(500).send("No such user.");
+         }
+        console.log("Username: %s", user.username);
+
+        let allQuestions = {};
+    //    let allComments = {};
+
+        db.serialize(function(){
+            db.all("SELECT * FROM questions WHERE author=?",user.username, function(err, questions){
+                if(err){
+                    res.sendStatus(500);
+                    return console.error("Error in user.profile questions",err);
+                }
+                allQuestions = questions;
+            });
+            // db.get("SELECT id FROM users WHERE username=?")
+            db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
+                if(err){
+                    res.sendStatus(500);
+                    return console.error("Error in user.profile comments",err);
+                }
+                console.log(JSON.stringify(comments));
+                res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
+            });
+        });
+
+
+
+      });
   }
 }
 
