@@ -1,16 +1,9 @@
 var sqlite3 = require('sqlite3'),
-    db = require('../db'),
+    db = new sqlite3.Database('../database/shs.sqlite3'),
     encryption = require('./encryption');
 
 // Create the database schema and populate
 db.serialize(function() {
-
-<<<<<<< HEAD
-  // Users: id, username, fname, lname, email, admin, blocked, password_digest, salt
-  db.run("CREATE TABLE if not exists users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
-
-  // creating a default user
-=======
   // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
   db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, picture TEXT, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
 
@@ -69,7 +62,7 @@ db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocke
   // POPULATE COMMENTS *****************************************
   db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (1, 4, 'We never went over this part in class.',CURRENT_TIMESTAMP)");
   db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (2, 1, 'Take I70 West for 6 hours',CURRENT_TIMESTAMP)");
-  db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (3, 2, 'I'm more attracted to moons.',CURRENT_TIMESTAMP)");
+  db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (3, 2, 'I am more attracted to moons.',CURRENT_TIMESTAMP)");
   db.run("INSERT INTO comments (qid, userid, desc,date) VALUES (4, 3, 'Deepest point is ~7 miles.',CURRENT_TIMESTAMP)");
   // TABLE QUESTIONS: id, course, rating, numOfReviews, shortdesc, desc, answeredBy, date, userid
   db.run("CREATE TABLE IF NOT EXISTS Questions(id INTEGER PRIMARY KEY, course VARCHAR(6), rating INTEGER, numOfReviews INTEGER, shortdesc TEXT NOT NULL, desc TEXT NOT NULL, answeredBy TEXT, author TEXT NOT NULL, date TEXT NOT NULL, FOREIGN KEY(author) REFERENCES users(id))");
@@ -86,47 +79,4 @@ db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocke
   db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 301', 1, 3, 'How old is Mel Gibson?', 'Short Description', 'None', CURRENT_TIMESTAMP, 'zcleary1')");
 
   db.run("INSERT INTO Questions (course, rating, numOfReviews, shortdesc, desc, answeredBy, date, author) VALUES ('CIS 526', 5, 3, 'How deep is the ocean?', 'Hello Universe', 'None', CURRENT_TIMESTAMP, 'zcleary1')");
-
-
-
-<<<<<<< HEAD
-  // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
->>>>>>> Rhurac/master
-  var salt = encryption.salt();
-   db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocked, password_digest, salt) VALUES (?,?,?,?,?,?,?,?,?)",
-    'sagar5589',
-    'Sagar',
-    'Mehta',
-    '/images/zerg.png',
-    'sagar5589@ksu.edu',
-    true,
-    false,
-    encryption.digest('password' + salt),
-    salt
-  );
-<<<<<<< HEAD
-
-  db.each("SELECT * FROM users", function(err, row){
-    if(err) return console.error(err);
-  });
-
-  // Questions: id, body, date, userid
-  // Comment: id, qid, userid, body, date
-  db.run("CREATE TABLE if not exists Questions(id INTEGER PRIMARY KEY, body TEXT NOT NULL, date TEXT NOT NULL, userid INTEGER,  FOREIGN KEY(userid) REFERENCES users(id))");
-  db.run("CREATE TABLE if not exists Comment(id INTEGER PRIMARY KEY, qid INTEGER NOT NULL, userid INTEGER, body TEXT, date TEXT NOT NULL, FOREIGN KEY(userid) REFERENCES users(id), FOREIGN KEY(qid) REFERENCES Questions(id))");
-
-
-
-  // Log contents of equipment table to the console
-  db.each("SELECT * FROM users", function(err, row){
-    if(err) return console.error(err);
-    console.log(row);
-    console.log("Exit");
-  });
-
-=======
->>>>>>> Rhurac/master
-=======
-
->>>>>>> master
 });
