@@ -30,6 +30,9 @@ default: #fff */
         display: flex;
         align-items: center;
     }
+    div.list-group-item.row{
+        border-radius:15px;
+    }
     #whole-page{
         padding-right:0;
     }
@@ -49,4 +52,12 @@ default: #fff */
     #userPic{
         padding-right:0;
         padding-left:0;
+    }
+    #comment-info, #question-info{
+        border-bottom:1px solid #5a2b81;
+        margin-bottom:8px;
+    }
+
+    div i p{
+        margin-bottom:0;
     }
