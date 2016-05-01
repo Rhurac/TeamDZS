@@ -1,29 +1,9 @@
 <link type="text/css" rel="stylesheet" href="/css/users_profile.css"/>
-<!-- <p>TEST TEST TEST</p>
-<div class ="container">
-    <ul>
-        <li>{{user.id}}</li>
-        <li>{{user.username}}</li>
-        <li>{{user.fname}}</li>
-        <li>{{user.lname}}</li>
-    </ul>
-</div> -->
+
 <div class="container-fluid" id="whole-page">
     <div class="row-fluid">
-        <!-- Left nav section -->
-        <!-- <div class="col-md-2 left-nav">
-            What does this look like
-            <ul class="list-unstyled text-center">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Not Home</a></li>
-                <li><a href="#">Phone Home</a></li>
-                <li><a href="#">No Home Phone</a></li>
-            </ul>
-        </div> -->
-        <!-- End of nav -->
-
         <!-- Body section -->
-        <div class="col-md-10 body">
+        <div class="col-md-12 body">
             <div class="row-fluid">
                 <div class="col-md-12" id="main-head">
                     <p class="text-center purple-bold">
@@ -51,20 +31,41 @@
             <div class="row-fluid main-content">
                 <div class="row-fluid">
                     <!-- Question column -->
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <h2>User Questions:</h2>
                         <div class="list-group">
                             {{#each questions}}
-                                <a href="#" class="list-group-item">{{shortdesc}}</a><br/>
+                                <div class="list-group-item row" style="border:1px solid #5a2b81;">
+                                    <div class="row text-center" id="question-info">
+    									<span class="col-md-4">In: <a href="/questions/{{course}}">{{course}}</a></span>
+    									<span class="col-md-6 col-md-offset-2">{{date}}</span>
+    								</div>
+                                    <div class="row text-center">
+    									<div class="col-md-12 center-block">
+    										<i><p>{{shortdesc}}</p></i>
+    									</div>
+    								</div>
+                                </div><hr/>
                             {{/each}}
                         </div>
                     </div>
                     <!-- Comment column -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 col-md-offset-1">
                         <h2>User Comments:</h2>
                         <div class="list-group">
                             {{#each comments}}
-                                <a href="#" class="list-group-item">{{shortdesc}}</a><br/>
+                                <div class="list-group-item row" style="border:1px solid #5a2b81;">
+                                    <div class="row text-center" id="comment-info">
+                                        <span class="col-md-3">In: <a href="/questions/{{course}}">{{course}}</a></span>
+                                        <span class="col-md-4">To: <a href="/users/{{repliedTo}}">{{repliedTo}}</a></span>
+                                        <span class="col-md-5">{{date}}</span>
+                                    </div>
+                                    <div class="row text-center">
+    									<div class="col-md-12 center-block">
+    										<i><p>{{desc}}</p></i>
+    									</div>
+    								</div>
+                                </div><hr/>
                             {{/each}}
                         </div>
                     </div>

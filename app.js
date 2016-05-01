@@ -7,14 +7,17 @@ var express = require('express'),
   collateFilteredQuestions = require('./middlewares/collateFilteredQuestions'),
   check_if_user_exists = require("./middlewares/check_if_user_exists"),
   admin_only = require("./middlewares/admin_only"),
-  load_user = require("./middlewares/load_user");
-// var db = require('./database/seed');
+  noGuests = require("./middlewares/noGuests"),
+  load_user = require("./middlewares/load_user"),
+  http = require('http').Server(app),
+  socket = require('socket.io'),
+  io = socket(http);
 
 app.disable('x-powered-by');
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.env.PORT || 3000);
-app.use(favicon(__dirname + '/public/images/website_logo.png'));
+app.use(favicon(__dirname+'/public/images/website_logo.png'));
 app.use(sessions({
   cookieName: 'session',
   secret: 'StarCraftKittens1986',
@@ -27,18 +30,33 @@ app.use(express.static(path.join(__dirname, "/views")));
 app.use(function(req, res, next) { res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0'); next(); });
 app.use(load_user);
 
+/*
+Index Routes
+*/
 var index = require('./controllers/index');
+//post for login.
 app.get('/login', index.landing);
 app.get('/', index.landing);
 app.get('/home', collateFilteredQuestions, index.home);
 app.get('/about', index.about);
 app.get('/contact', index.contact);
 
+/*
+Session Routes
+*/
 var sessions = require('./controllers/sessions');
+
 app.get('/sessions/new', sessions.new);
 app.post('/sessions/create', sessions.create);
 app.get("/sessions/delete", sessions.delete);
-
+/*
+Chat Routes
+*/
+var chat = require('./controllers/chat');
+app.get('/chat', chat.chat);
+/*
+User Routes
+*/
 var users = require("./controllers/users");
 app.get("/users/index", admin_only, users.index);
 app.get("/users/new", users.new);
@@ -46,9 +64,20 @@ app.post("/users/create", check_if_user_exists, users.create);
 app.get("/users/show", admin_only, users.show);
 app.post("/users/:id/update", users.update);
 app.get("/users/:id/delete", admin_only, users.delete);
-
 app.get("/users/:userName", users.profile);
-
+/*
+Question Routes
+*/
+questions = require('./controllers/questions');
+app.get("/questions/:courseID", noGuests, questions.new);
+app.post("/questions/:courseID", noGuests, questions.create);
+/*
+Comment Routes
+*/
+var comments = require("./controllers/comments");
+app.post("/questions/:questionID/comments", noGuests,comments.create);
+app.get("/questions/:questionID/comments/:commentID/delete",noGuests,comments.delete);
+//app.get('/test', comments.new);
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
 });
