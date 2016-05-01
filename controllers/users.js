@@ -114,7 +114,6 @@ class User {
          if(err|!user){
              console.error("Error in Users.profile, no user in db:", err);
             return res.render('error/noUser',{layout: "error", message : "No such user exists: "+userName});
-
          }
         if(userName)
         console.log("Username: %s", userName);
