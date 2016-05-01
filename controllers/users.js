@@ -113,7 +113,7 @@ class User {
       db.get("SELECT * FROM users WHERE username = ?",userName, function(err, user){
          if(err|!user){
              console.error("Error in Users.profile, no user in db:", err);
-            return res.render('error/noUser',{layout: "error", message : "No such user exists."});
+            return res.render('error/noUser',{layout: "error", message : "No such user exists: "+userName});
 
          }
         if(userName)
