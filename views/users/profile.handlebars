@@ -2,14 +2,8 @@
 
 <div class="container-fluid" id="whole-page">
     <div class="row-fluid">
-
         <!-- Body section -->
-        {{#if message}}
-        <div class="alert alert-danger" role="alert">
-            {{message}}
-        </div>
-        {{/if}}
-        <div class="col-md-10 body">
+        <div class="col-md-12 body">
             <div class="row-fluid">
                 <div class="col-md-12" id="main-head">
                     <p class="text-center purple-bold">
@@ -38,7 +32,7 @@
                 <div class="row-fluid">
                     <!-- Question column -->
                     <div class="col-md-5">
-                        <h2>User Questions:</h2>
+                        <h2>Questions:</h2>
                         <div class="list-group">
                             {{#each questions}}
                                 <div class="list-group-item row" style="border:1px solid #5a2b81;">
@@ -57,7 +51,7 @@
                     </div>
                     <!-- Comment column -->
                     <div class="col-md-6 col-md-offset-1">
-                        <h2>User Comments:</h2>
+                        <h2>Comments:</h2>
                         <div class="list-group">
                             {{#each comments}}
                                 <div class="list-group-item row" style="border:1px solid #5a2b81;">
