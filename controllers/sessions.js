@@ -19,7 +19,6 @@ class Session {
     form.parse(req, function(err, fields, files){
       if(err) return res.sendStatus(500);
       db.get("SELECT * FROM users WHERE email = ?", fields.email, function(err, user){
-        //console.log(encryption.digest(fields.password + user.salt));
         if(err)
         {
           console.log("I am in --> if (err)");
@@ -38,12 +37,11 @@ class Session {
           console.log(user.password_digest);
           return res.render('sessions/new', {layout:"landing",message: "Email/Password3 combination not found.", user: req.user});
         }
-
+        
         if(user.blocked)
         {
-          return res.render('sessions/new', {layout:"landing",message: "This user account has been blocked by an Admin", user: req.user});          //req.session.user_id = user.id;
+          return res.render('sessions/new', {layout:"landing",message: "This user account has been blocked by an Admin", user: req.user});
         }
-
         req.session.user_id = user.id;
 
         return res.redirect('/home');
