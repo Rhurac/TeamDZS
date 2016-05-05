@@ -4,6 +4,7 @@
     <title>Chat</title>
     <style>
       #chat{ height:500px;}
+      #submit {height: 20px;}
     </style>
     <link href="/css/chat.css" rel="stylesheet" type="text/css">
   </head>
@@ -26,10 +27,10 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <!-- <script src="/client/socket.io.js"></script> -->
   	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-
+<!-- TUE: 9:40-11:30 -->
     <script>
       jQuery(function($){
-        alert("xx");
+        // alert("xx");
         var socket = io.connect();
         var $messageForm = $('#send-message');
         var $messageBox = $('#message');
@@ -37,13 +38,14 @@
 
       $messageForm.submit(function(e){
         e.preventDefault();
-        alert("Sent!");
+        //alert("Sent!");
         socket.emit('send message', $messageBox.val());
         $messageBox.val('');
       });
 
       socket.on('new message', function(data){
-        $messageBox.append(data + "<br/>");
+        console.log("Data", data);
+        $chat.append(data + "<br/>");
       });
     });
  </script>

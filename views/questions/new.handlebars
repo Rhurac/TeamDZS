@@ -1,7 +1,12 @@
+<head>
+  <link href="/css/questions.css" rel="stylesheet" type="text/css">
+</head>
 <div class="container" >
   <h1> Welcome to CIS{{courseID}} </h1>
-  <p> {{#each questions}}
-      {{desc}}
+  <p> </br>
+      {{#each questions}}
+      {{shortdesc}} </br>
+      {{desc}} </br>
       {{/each}} </p>
   <form class="questions" action="/questions/{{courseID}}" method="post">
     <h2 class="form-signin-heading"></h2>

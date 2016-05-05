@@ -12,7 +12,7 @@ var express = require('express'),
   load_user = require("./middlewares/load_user"),
   http = require('http').Server(app),
   socket = require('socket.io'),
-  io = socket(http);
+  io = socket.listen(http);
 
 app.disable('x-powered-by');
 app.engine('handlebars', handlebars.engine);
@@ -50,7 +50,18 @@ var chat = require('./controllers/chat');
 app.get('/sessions/new', sessions.new);
 app.post('/sessions/create', sessions.create);
 app.get("/sessions/delete", sessions.delete);
-app.get('/chat', chat.chat);
+app.get('/chat', function(req, res){
+  //res.render("chat/chat");
+  res.sendfile(__dirname + '/chat.html');
+});
+
+io.sockets.on('connection', function(socket){
+  console.log('User connected');
+  socket.on('send message', function(data){
+    io.emit('new message', data);
+    console.log('Message: ', data);
+  });
+});
 /*
 User Routes
 */
@@ -61,7 +72,7 @@ app.post("/users/create", check_if_user_exists, users.create);
 app.get("/users/show", admin_only, users.show);
 app.post("/users/:id/update", users.update);
 app.get("/users/:id/delete", admin_only, users.delete);
-app.get("/users/:userName", users.profile);
+app.get("/users/:username", users.profile);
 /*
 Comment Routes
 */
@@ -73,6 +84,6 @@ app.get("/questions/:qID/comments/:cID/delete",comments.delete);
 app.get("/questions/:courseID", noGuests, questions.new);
 app.post("/questions/:courseID", noGuests, questions.create);
 
-app.listen(app.get('port'), function(){
+http.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
 });

@@ -4,8 +4,6 @@ var db = require('../db'),
   encryption = require("../database/encryption"),
   fs = require("fs-extra");
 
-
-
 class User {
   index(req, res){
     db.all("SELECT * FROM users", function(err, all){
@@ -114,7 +112,7 @@ class User {
              console.error("Error in Users.profile", err);
              return res.sendStatus(500).send("No such user.");
          }
-        console.log("Username: %s", user.username);
+        //console.log("Username: %s", user.username);
 
         let allQuestions = {};
     //    let allComments = {};
