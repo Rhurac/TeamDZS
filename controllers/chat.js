@@ -1,19 +1,18 @@
 "use strict"
-var express = require('express'),
-    app = express(),
-    http = require('http'),//.Server(app),
-    socket = require('socket.io');
-    //io = socket(http);
+var db = require('../db');
 
-//app.use(express.static('public'));
+class Chat{
 
-/* io.on('connection', (socket) => {
-  console.log("A user connected");
-  socket.on('disconnect', () => console.log("A user disconnected"));
-  socket.on('chat message', (msg) => {
-    console.log('A user said', msg);
-    io.emit('chat message', msg);
-  })
-}); */
+  chat(req, res){
+    db.get("SELECT username FROM users WHERE id = ?", req.session.user_id, function(err, username){
+      if(err) console.log(err, "Error while searching table users.");
+      username = username.username;
+      //username = req.session.username;
+      res.render('chat/chat', {user: username});
+      //res.render('chat/chat');
+      console.log("My username, ",username);
+        });
+      }
+    }
 
-//module.exports = exports = new Chat();
+module.exports = exports = new Chat();

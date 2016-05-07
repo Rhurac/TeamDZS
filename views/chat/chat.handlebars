@@ -1,51 +1,38 @@
-<!doctype html>
-<html>
-  <head>
+<head>
     <title>Chat</title>
     <style>
-      #chat{ height:500px;}
+      button{height:30px; width: 72px;}
     </style>
     <link href="/css/chat.css" rel="stylesheet" type="text/css">
-  </head>
+</head>
   <body>
-    <!-- <a href="http://localhost:3000/home">Home</a></br> -->
     <h1 style="color: #512888";>Welcome to Chat room!</h1></br>
     <div id="chat"></div>
   	<form id="send-message">
-  		<input size="35" id="message"></input>
-  		<input type="submit"></input>
+    	<input id="message"></input>
+  		<button> Send </button>
   	</form>
-    <!-- <ul id="chat-messages"></ul>
-    <form id="chat-form" action="">
-
-      <input id="chat-message" autocomplete="off" />
-      <button>Send</button>
-
-    </form> -->
-    <!-- <script src="/chat.js"></script> -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <!-- <script src="/client/socket.io.js"></script> -->
-  	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <!-- TUE: 9:40-11:30 -->
     <script>
       jQuery(function($){
-        alert("xx");
+        // alert("xx");
         var socket = io.connect();
-        var $messageForm = $('#send-message');
-        var $messageBox = $('#message');
-        var $chat = $('#chat');
+        var $form = $('#send-message');
+        var $msgBox = $('#message').css({ 'height': "30px", 'width': "65%" });
+        $('msgBox').attr( 'autocomplete', 'off' );
+        var $chat = $('#chat').css({ 'height': "450px", 'width':"71%", 'overflow': "scroll", 'border-style': "solid"});
 
-      $messageForm.submit(function(e){
+      $form.submit(function(e){
         e.preventDefault();
-        alert("Sent!");
-        socket.emit('send message', $messageBox.val());
-        $messageBox.val('');
+        socket.emit('send message', $msgBox.val());
+        $msgBox.val('');
       });
 
       socket.on('new message', function(data){
-        $messageBox.append(data + "<br/>");
+        $chat.append(data, "<br/>");
       });
     });
  </script>
 </body>
-</html>

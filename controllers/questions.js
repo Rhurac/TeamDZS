@@ -34,7 +34,7 @@ class Question{
    var course = "CIS "+tempCourse;
    db.all("SELECT * FROM QUESTIONS WHERE course = ?", course, function(err, questions){
      //if(err) res.sendStatus(500);
-     res.render('questions/new', {courseID:tempCourse,questions:questions});
+     res.render('questions/new', {courseID:tempCourse, questions:questions});
   });
      //console.log("Course:",course);
      //res.render("questions/new",{courseID:tempCourse},{questions:questions});

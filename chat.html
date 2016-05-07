@@ -32,14 +32,14 @@
       jQuery(function($){
         // alert("xx");
         var socket = io.connect();
-        var $messageForm = $('#send-message');
-        var $messageBox = $('#message');
+        var $form = $('#send-message');
+        var $msgBox = $('#message');
         var $chat = $('#chat');
 
-      $messageForm.submit(function(e){
+      $form.submit(function(e){
         e.preventDefault();
         //alert("Sent!");
-        socket.emit('send message', $messageBox.val());
+        socket.emit('send message', $msgBox.val());
         $messageBox.val('');
       });
 
