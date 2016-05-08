@@ -50,20 +50,21 @@ var chat = require('./controllers/chat');
 app.get('/sessions/new', sessions.new);
 app.post('/sessions/create', sessions.create);
 app.get("/sessions/delete", sessions.delete);
-app.get('/chat', function(req, res){
+/*app.get('/chat', function(req, res){
   res.render("chat/chat");
   //res.sendfile(__dirname + '/chat.html');
-});
+}); */
 
-//app.get("/chat", chat.chat);
+app.get("/chat", chat.chat);
 
-io.sockets.on('connection', function(socket){
+io.sockets.on('connection', function(socket) {
   console.log('User connected');
   socket.on('send message', function(data){
     io.emit('new message', data);
     console.log('Message: ', data);
   });
 });
+
 /*
 User Routes
 */
