@@ -68,9 +68,10 @@ app.get("/users/:userName", users.profile);
 /*
 Question Routes
 */
-questions = require('./controllers/questions');
+var questions = require('./controllers/questions');
 app.get("/questions/:courseID", noGuests, questions.new);
 app.post("/questions/:courseID", noGuests, questions.create);
+app.post("/questions/update", questions.update);
 /*
 Comment Routes
 */
