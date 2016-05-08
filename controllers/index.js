@@ -16,7 +16,7 @@ class Index{
           res.render('index/home', { username: username, picture: picture, questions: res.locals.questions, myQuestions: myQuestions });
         });
       });
-    })
+    });
   }
 
   about(req, res){
