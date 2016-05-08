@@ -5,7 +5,7 @@
 
 Wildcat Tutors is a simple application that allows CIS students of K-State an opportunity to seek out help when struggling to understand new concepts. The people who stand to gain the most out this application are the students who work and are unable to meet during office/help hours. **_The main goal is to provide an environment that allows CIS students an opportunity to network with each other, discuss concepts, theory, and ~~frustrations~~ obstacles we're faced with as CIS students._** The application renders dynamic web pages using Handlebars and Bootstrap. The questions are organized by course numbers (CIS300, CIS501, CIS. . .) and any member is allowed to answer these questions.
 
-The expected benefits of this application:
+Expected benefits of the application:
 
 * K-State produces a higher quality of CIS students.
 * Students who provide answers to questions reinforce their understanding.
