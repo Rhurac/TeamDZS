@@ -36,7 +36,9 @@ class Question{
         db.get('SELECT picture FROM users WHERE username = ?', username, function(err, data){
           var picture = data.picture;
           db.all("SELECT * FROM questions WHERE course = ?", course, function(err, questions){
-            res.render('questions/new', { user_id: user_id, course: course, courseID: courseNumber, username: username, picture: picture, questions: questions, myQuestions: myQuestions });
+            db.all("SELECT * FROM questions WHERE id = ?", user_id, function(err, questionsIveAnswered){
+              res.render('questions/new', { questionsIveAnswered: questionsIveAnswered, user_id: user_id, course: course, courseID: courseNumber, username: username, picture: picture, questions: questions, myQuestions: myQuestions });
+            });
           });
         });
       });

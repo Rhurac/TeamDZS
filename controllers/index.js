@@ -12,8 +12,10 @@ class Index{
       username = username.username;
       db.all('SELECT * FROM questions WHERE author = ?', username, function(err, myQuestions){
         db.get('SELECT picture FROM users WHERE username = ?', username, function(err, data){
-          var picture = data.picture;
-          res.render('index/home', { username: username, picture: picture, questions: res.locals.questions, myQuestions: myQuestions });
+          db.all("SELECT * FROM questions WHERE id = ?", req.session.user_id, function(err, questionsIveAnswered){
+            var picture = data.picture;
+            res.render('index/home', { questionsIveAnswered: questionsIveAnswered, username: username, picture: picture, questions: res.locals.questions, myQuestions: myQuestions });
+          });
         });
       });
     });
