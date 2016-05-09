@@ -128,6 +128,9 @@ class User {
                     if(question.author === req.session.username){
                         question.show = true;
                     }
+                    else{
+                        question.other = true;
+                    }
                 });
                 db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                     if(err){

@@ -46,13 +46,17 @@
     										<i><p>{{shortdesc}}</p></i>
     									</div>
     								</div>
-                                    {{#if show}}
+
                                     <div class="row">
-                                        <button class="btn glyphicon glyphicon-comment pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
-                                        <button class="btn glyphicon glyphicon-wrench pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
-                                        <button class="btn glyphicon glyphicon-remove pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        {{#if show}}
+                                        <button class="btn glyphicon glyphicon-wrench pull-right profileGlyph" role="button" onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-remove pull-right profileGlyph" role="button"  onclick="commentBox(this);"></button>
+                                        {{/if}}
+                                        {{#if other}}
+                                        <button class="btn glyphicon glyphicon-comment pull-right profileGlyph" role="button"  onclick="commentBox(this);"></button>
+                                        {{/if}}
                                     </div>
-                                    {{/if}}
+
                                     <div class="row hidden">
                                         <form action="/comments/{{id}}" method="POST">
                                             <div class="col-md-10 col-md-offset-1">
@@ -91,9 +95,8 @@
     								</div>
                                     <div class="row">
                                         {{#if show }}
-                                        <button class="btn glyphicon glyphicon-comment pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
-                                        <button class="btn glyphicon glyphicon-wrench pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
-                                        <button class="btn glyphicon glyphicon-remove pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-wrench pull-right profileGlyph" role="button"  onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-remove pull-right profileGlyph" role="button"  onclick="commentBox(this);"></button>
                                         {{/if}}
                                     </div>
                                 </div><hr/>
