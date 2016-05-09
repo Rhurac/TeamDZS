@@ -4,9 +4,8 @@ var db = require('../db'),
   encryption = require("../database/encryption"),
   fs = require("fs-extra");
 
-
-
 class User {
+
   index(req, res){
     db.all("SELECT * FROM users", function(err, all){
       res.render("users/index", {users: all});
@@ -32,7 +31,6 @@ class User {
     salt
     );
     res.render("index/landing", {layout: "landing", message: "User " + fields.username + " created!"});
-    // return res.redirect("/sessions/delete");
 }
 
   show(req, res){
@@ -93,10 +91,6 @@ class User {
             return res.redirect("/users/index");
         });
       });
-
-
-
-
     });
   }
 
@@ -109,16 +103,14 @@ class User {
 
   profile(req, res){
       console.log("(profile())Username: "+req.params.userName);
-      let userName = req.params.userName;
+      var userName = req.params.userName;
       db.get("SELECT * FROM users WHERE username = ?",userName, function(err, user){
          if(err|!user){
              console.error("Error in Users.profile, no user in db:", err);
             return res.render('error/noUser',{layout: "error", message : "No such user exists: "+userName});
          }
         if(userName)
-        console.log("Username: %s", userName);
-
-        let allQuestions = {};
+        var allQuestions = {};
 
         db.serialize(function(){
             db.all("SELECT * FROM questions WHERE author=?",userName, function(err, questions){
@@ -136,12 +128,7 @@ class User {
                     res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
                 });
             });
-            // db.get("SELECT id FROM users WHERE username=?")
-
         });
-
-
-
       });
   }
 }

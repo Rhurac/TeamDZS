@@ -1,16 +1,18 @@
 "use strict"
 var db = require('../db');
-var formidable = require('formidable');
 
 class Chat{
 
-  landing(req, res){
-    res.render('index/landing', { layout: "landing"});
-  }
-//// TABLE QUESTIONS: id, course, rating, numOfReviews, shortdesc, desc, answeredBy, date, userid
   chat(req, res){
-    res.render('chat/chat');
-  }
-}
+
+    db.get("SELECT * FROM users WHERE id = ?", req.session.user_id, function(err, username){
+      if(err) console.log(err, "Error while searching table users.");
+      username = username.username;
+      res.render('chat/chat', {username: username});
+      console.log("Username: ",username);
+        });
+      }
+ }
+  
 
 module.exports = exports = new Chat();
