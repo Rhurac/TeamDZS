@@ -28,19 +28,19 @@
               Class <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li role="presentation" class="active"><a href="questions/CIS115">CIS 115</a></li>
-              <li role="presentation"><a href="questions/CIS125">CIS 125</a></li>
-              <li role="presentation"><a href="questions/CIS200">CIS 200</a></li>
-              <li role="presentation"><a href="questions/CIS300">CIS 300</a></li>
-              <li role="presentation"><a href="questions/CIS301">CIS 301</a></li>
-              <li role="presentation"><a href="questions/CIS450">CIS 450</a></li>
-              <li role="presentation"><a href="questions/CIS501">CIS 501</a></li>
-              <li role="presentation"><a href="questions/CIS526">CIS 526</a></li>
-              <li role="presentation"><a href="questions/CIS527">CIS 527</a></li>
-              <li role="presentation"><a href="questions/CIS560">CIS 560</a></li>
-              <li role="presentation"><a href="questions/CIS562">CIS 562</a></li>
-              <li role="presentation"><a href="questions/CIS625">CIS 625</a></li>
-              <li role="presentation"><a href="questions/CIS640">CIS 640</a></li>
+              <li role="presentation" class="active"><a href="questions/CIS115/new">CIS 115</a></li>
+              <li role="presentation"><a href="questions/CIS125/new">CIS 125</a></li>
+              <li role="presentation"><a href="questions/CIS200/new">CIS 200</a></li>
+              <li role="presentation"><a href="questions/CIS300/new">CIS 300</a></li>
+              <li role="presentation"><a href="questions/CIS301/new">CIS 301</a></li>
+              <li role="presentation"><a href="questions/CIS450/new">CIS 450</a></li>
+              <li role="presentation"><a href="questions/CIS501/new">CIS 501</a></li>
+              <li role="presentation"><a href="questions/CIS526/new">CIS 526</a></li>
+              <li role="presentation"><a href="questions/CIS527/new">CIS 527</a></li>
+              <li role="presentation"><a href="questions/CIS560/new">CIS 560</a></li>
+              <li role="presentation"><a href="questions/CIS562/new">CIS 562</a></li>
+              <li role="presentation"><a href="questions/CIS625/new">CIS 625</a></li>
+              <li role="presentation"><a href="questions/CIS640/new">CIS 640</a></li>
               <li role="presentation"><a href="http://localhost:3000/chat">Chat</a></li>
               <!-- <li role="presentation"><a href="questions/CIS125">Other</a></li> -->
             </ul>
@@ -54,10 +54,10 @@
         {{#each questions}}
           <div class="thumbnail" style="padding:15px;">
               <div class="caption-full">
-                  <h4><a href="#">{{shortdesc}}</a><span class="pull-right">{{date}}</span></h4>
-                  <p>
+                  <h4><a href="#">{{course}}: {{shortdesc}}</a><span class="pull-right">{{date}}</span></h4>
+                  <div class="well">
                     {{desc}}
-                  </p>
+                  </div>
               </div>
               <div class="ratings">
                   <p class="pull-right">{{numOfReviews}} reviews</p>
