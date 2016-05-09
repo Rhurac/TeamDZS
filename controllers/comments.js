@@ -25,19 +25,32 @@ class Comment{
         });
     }
 
-    show(req, res){
+    allComments(req, res){
+        db.all("SELECT * FROM comments WHERE qid=?", req.params.questionID, (err, comments)=>{
+            if(err){res.sendStatus(500); console.error(err);}
+            comments.forEach((comment)=>{
+                if(comment.userid === req.session.user_id){
+                    comment.show = true;
+                }
 
+                console.log(JSON.stringify(comments));
+                return;
+            });
+
+            return res.render("comments/forQuestions",{layout:"comments", comments:comments});
+        });
     }
 
     update(req, res){
         var form = new formidable.IncomingForm();
         form.parse(req, (err, fields, files) =>{
-            if(err) console.error(err);
+            if(err) return console.error(err);
             db.run("UPDATE comments SET desc=? WHERE id=?",
                 fields.comment,
                 req.commentID,
                 (err, success)=>{
-                if(err) console.log(err);
+                if(err) return console.log(err);
+                res.redirect('back');
             });
         });
     }

@@ -75,10 +75,10 @@ app.post("/questions/:courseID", noGuests, questions.create);
 Comment Routes
 */
 var comments = require("./controllers/comments");
-app.post("/comments/:questionID",  comments.create);
-app.post("/comments/:commentID/update", comments.update);
-app.get("/comments/:commentID/delete",comments.delete);
-app.get("/comments/:commentID", comments.show);
+app.post("/comments/:questionID", noGuests, comments.create);
+app.post("/comments/:commentID/update", noGuests, comments.update);
+app.get("/comments/:commentID/delete", noGuests, comments.delete);
+app.get("/comments/:questionID", noGuests, comments.allComments);
 
 // ExpressHandlebars.registerHelper('equal', );
 //app.get('/test', comments.new);
