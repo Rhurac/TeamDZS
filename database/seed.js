@@ -1,11 +1,10 @@
 var sqlite3 = require('sqlite3'),
     db = new sqlite3.Database('../database/shs.sqlite3'),
     encryption = require('./encryption');
-
 // Create the database schema and populate
 db.serialize(function() {
+    
   // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
-
   db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, picture TEXT, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
    // POPULATE USERS **********************************************************************************************************************************
   var salt = encryption.salt();
@@ -53,7 +52,6 @@ db.run("INSERT INTO users (username, fname, lname, picture, email, admin, blocke
  encryption.digest('password' + salt),
  salt
 );
-
 // TABLE QUESTIONS: id, course, rating, numOfReviews, shortdesc, desc, answeredBy, author, date
 db.run("CREATE TABLE IF NOT EXISTS Questions(id INTEGER PRIMARY KEY, course VARCHAR(6), rating INTEGER, numOfReviews INTEGER, shortdesc TEXT NOT NULL, desc TEXT NOT NULL, answeredBy TEXT, author TEXT NOT NULL, date TEXT NOT NULL, FOREIGN KEY(author) REFERENCES users(id))");
 // POPULATE QUESTIONS **********************************************************************************************************************************
@@ -93,22 +91,4 @@ db.run("INSERT INTO comments (qid, userid, desc, course, repliedTo, date) VALUES
 db.run("INSERT INTO comments (qid, userid, desc, course, repliedTo, date) VALUES (4, 2, 'Deepest point is ~7 miles.', 'CIS450','Rhurac',CURRENT_TIMESTAMP)");
 db.run("INSERT INTO comments (qid, userid, desc, course, repliedTo, date) VALUES (4, 3, 'Deepest point is ~7 miles.', 'CIS450','Rhurac',CURRENT_TIMESTAMP)");
 db.run("INSERT INTO comments (qid, userid, desc, course, repliedTo, date) VALUES (4, 4, 'Deepest point is ~7 miles.', 'CIS450','Rhurac',CURRENT_TIMESTAMP)");
-
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (1, 2, 'We never went over this part in class.', 'CIS300',CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (2, 2, 'Take I70 West for 6 hours', 'CIS301',CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (3, 2, 'Take I70 West for 6 hours', 'CIS501', CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (4, 2, 'I am more attracted to moons.', 'CIS505', CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (5, 2, 'Deepest point is ~7 miles.', 'CIS450',CURRENT_TIMESTAMP)");
-//
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (1, 3, 'We never went over this part in class.', 'CIS300',CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (2, 3, 'Take I70 West for 6 hours', 'CIS301',CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (3, 3, 'Take I70 West for 6 hours', 'CIS501', CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (4, 3, 'I am more attracted to moons.', 'CIS505', CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (5, 3, 'Deepest point is ~7 miles.', 'CIS450',CURRENT_TIMESTAMP)");
-//
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (1, 4, 'We never went over this part in class.', 'CIS300',CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (2, 4, 'Take I70 West for 6 hours', 'CIS301',CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (3, 4, 'Take I70 West for 6 hours', 'CIS501', CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (4, 4, 'I am more attracted to moons.', 'CIS505', CURRENT_TIMESTAMP)");
-// db.run("INSERT INTO comments (qid, userid, desc, course, date) VALUES (5, 4, 'Deepest point is ~7 miles.', 'CIS450',CURRENT_TIMESTAMP)");
 });

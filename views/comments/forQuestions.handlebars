@@ -1,0 +1,20 @@
+{{#each comments}}
+<div class="list-group-item row comments">
+    <div class="row text-center" id="comment-info">
+        <span class="col-md-3 ">In: <a href="/questions/{{course}}">{{course}}</a></span>
+        <span class="col-md-4 ">To: <a href="/users/{{repliedTo}}">{{repliedTo}}</a></span>
+        <span class="col-md-5 col-xs-5">{{date}}</span>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-12 center-block">
+            <i><p>{{desc}}</p></i>
+        </div>
+    </div>
+    <div class="row">
+        {{#if show }}
+        <button class="btn glyphicon glyphicon-wrench pull-right profileGlyph" role="button"  onclick="update(this);" id="update{{id}}"></button>
+        <button class="btn glyphicon glyphicon-remove pull-right profileGlyph" role="button"  onclick="delete(this);" id="delete{{id}}"></button>
+        {{/if}}
+    </div>
+</div>
+{{/each}}

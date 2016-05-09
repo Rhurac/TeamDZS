@@ -31,7 +31,26 @@ default: #fff */
         align-items: center;
     }
     div.list-group-item.row{
-        border-radius:15px;
+        border-radius:8px;
+    }
+    div.comments{
+        border:1px solid red;
+    }
+    textarea.form-control.comment-box{
+        margin-top:20px;
+        margin-bottom:10px;
+        max-width:100%;
+        max-height:100%;
+    }
+    .profileGlyph{
+        font-size:20px;
+        background:inherit;
+        text-decoration:none;
+        padding:0 10px 0 12px;
+    }
+    .profileGlyph:hover{
+        background-color:auto;
+
     }
     #whole-page{
         padding-right:0;
@@ -61,3 +80,22 @@ default: #fff */
     div i p{
         margin-bottom:0;
     }
+
+    div#comments-under-questions{
+        border:1px solid red;
+    }
+
+    div.comment-preview{
+        margin:2px;
+        padding:none;
+        max-width:100%;
+        max-height:100%;
+    }
+
+@media all and (max-width: 480px){
+    #comment-info, #question-info{
+        border-bottom:1px solid #fff;
+        margin-bottom:8px;
+    }
+
+}
