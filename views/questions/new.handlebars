@@ -24,23 +24,30 @@
 
       <div class="col-md-9">
           <h1> Welcome to CIS{{courseID}} </h1>
-          <form class="questions" action="/questions/{{courseID}}" method="post">
-            <h2 class="form-signin-heading"></h2>
-            <input name="short" type="text" id="short" class="form-control" placeholder="Write a Short description" required>
-            <input name="question" type="text" id="question" class="form-control" placeholder="Write a question" required>
-            <button class="btn btn-lg btn-success btn-block" type="submit">Post</button>
+          <form class="questions" action="/questions/{{courseID}}/create" method="post">
+            <h3 class="form-signin-heading">Post a question by filling out the form below:</h3>
+            <textarea name="numOfReviews" class="form-control hidden">0</textarea>
+            <input name="short" type="text" id="short" class="form-control" placeholder="Write a description, keep it short as this will be used as the title" required>
+            <textarea name="question" type="text" id="question" class="form-control" placeholder="Enter your question here with as much detail as possible" rows="5" required></textarea>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Post Question</button>
           </form>
           <br />
-
+          <h3>Select a question below to answer it:</h3>
           {{#each questions}}
             <div class="thumbnail" style="padding:15px;">
               <div class="caption-full">
-                  <h4><a onclick="showAnswerQuestionForm()" href="#">{{course}} - {{shortdesc}}</a><span class="pull-right">{{date}}</span></h4>
+                  <h4><a onclick="showAnswerQuestionForm(this)" href="#">{{course}} - {{shortdesc}}</a><span class="pull-right">{{date}}</span></h4>
                   <div id="qid" class="hidden">{{id}}</div>
                   <div class="well">
+                    Question:
+                    <br />
                     {{desc}}
                   </div>
+                  <div class="author pull-right">Author: {{author}}</div>
+                  <br />
               </div>
+
+
               <div class="ratings">
                   <p class="pull-right">{{numOfReviews}} reviews</p>
                   <p>
@@ -65,16 +72,17 @@
       <p>Team DZS</p>
     </footer>
   </div>
-
 </body>
 
-<form id="answerQuestionForm" class="col-md-6 hidden" action="/questions/update" method="GET">
+<form id="answerQuestionForm" class="col-md-6 hidden" action="/comments/update" method="POST">
   <div class="form-group">
-    <label for="answer">Answer this question:</label>
-    <textarea name="answer" placeholder="Enter your answer here. Be as descriptive as possible." class="form-control" rows="8" id="answer" autofocus></textarea>
+    <label for="desc">Answer this question:</label>
+    <textarea name="desc" placeholder="Enter your answer here. Be as descriptive as possible." class="form-control" rows="8" id="answer" autofocus></textarea>
+    <textarea name="user_id" class="form-control hidden">{{user_id}}</textarea>
+    <textarea name="course" class="form-control hidden">{{course}}</textarea>
+    <!-- <textarea name="repliedTo" class="form-control hidden"></textarea> -->
   </div>
   <button class="btn btn-lg btn-success btn-block" type="submit">Post Answer</button>
-  <!-- <a id="postAnswerBtn" class="btn btn-lg btn-success btn-block" type="submit" role="button">Post Answer</a> -->
 </form>
 
 <style>
@@ -99,21 +107,24 @@
     padding-left: 10px;
     margin-top: 5px;
   }
+  h3 {
+    font-style: italic;
+  }
+  .author {
+    margin-top: -10px;
+  }
 </style>
 
 <script>
   $("document").ready(function(){
-    // $(document).on("click","#postAnswerBtn",function(){
-    //   var form = $(this).closest("form");
-    //   form.submit();
-    // });
-    answerQuestion(anchorTag);
-    showAnswerQuestionForm();
+    showAnswerQuestionForm(anchorTag);
   });
 
-  function showAnswerQuestionForm(){
-    var id = $("#qid").text();
+  function showAnswerQuestionForm(anchorTag){
+    var qid = $("#qid").text();
+    var repliedTo = $(anchorTag).closest(".caption-full").find(".author").html();
     $("#answerQuestionForm").removeClass("hidden");
-    $("#answerQuestionForm").append("<p id='hidden_id' name='id' type='text' class='form-control hidden'>" + id + "</p>");
+    $("#answerQuestionForm").append("<textarea id='hidden_id' name='qid' type='text' class='form-control hidden'>" + qid + "</textarea>");
+    $("#answerQuestionForm").append("<textarea name='repliedTo' class='form-control hidden'>" + repliedTo + "</textarea>");
   }
 </script>
