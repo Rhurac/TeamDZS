@@ -32,7 +32,7 @@
             <div class="row-fluid main-content">
                 <div class="row-fluid">
                     <!-- Question column -->
-                    <div class="col-md-5">
+                    <div class="col-md-5" id="question-column">
                         <h2>Questions:</h2>
                         <div class="list-group">
                             {{#each questions}}
@@ -46,11 +46,15 @@
     										<i><p>{{shortdesc}}</p></i>
     									</div>
     								</div>
+                                    {{#if show}}
                                     <div class="row">
                                         <button class="btn glyphicon glyphicon-comment pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-wrench pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-remove pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
                                     </div>
+                                    {{/if}}
                                     <div class="row hidden">
-                                        <form action="/question/{{id}}/comments" method="POST">
+                                        <form action="/comments/{{id}}" method="POST">
                                             <div class="col-md-10 col-md-offset-1">
                                                     <textarea class="form-control comment-box" rows="3" name="comment"></textarea>
                                             </div>
@@ -58,6 +62,8 @@
                                                 <button class="btn btn-default" type="button" role="button" onclick="preview(this);">Preview</button>
                                                 <button class="btn btn-default" type="submit" role="button">Submit</button>
                                             </div>
+                                            <input type="text" class="hidden" name="user" value="{{author}}"/>
+                                            <input type="text" class="hidden" name="course" value="{{course}}"/>
                                         </form>
                                     </div>
                                 </div>
@@ -68,14 +74,14 @@
                     <script src="/javascript/bundle.js" type="text/javascript">
                     </script>
                     <!-- Comment column -->
-                    <div class="col-md-6 col-md-offset-1">
+                    <div class="col-md-6 col-md-offset-1" id="comment-column">
                         <h2>Comments:</h2>
                         <div class="list-group">
                             {{#each comments}}
                                 <div class="list-group-item row" style="border:1px solid #5a2b81;">
                                     <div class="row text-center" id="comment-info">
-                                        <span class="col-md-3 col-xs-3">In: <a href="/questions/{{course}}">{{course}}</a></span>
-                                        <span class="col-md-4 col-xs-4">To: <a href="/users/{{repliedTo}}">{{repliedTo}}</a></span>
+                                        <span class="col-md-3 ">In: <a href="/questions/{{course}}">{{course}}</a></span>
+                                        <span class="col-md-4 ">To: <a href="/users/{{repliedTo}}">{{repliedTo}}</a></span>
                                         <span class="col-md-5 col-xs-5">{{date}}</span>
                                     </div>
                                     <div class="row text-center">
@@ -83,6 +89,13 @@
     										<i><p>{{desc}}</p></i>
     									</div>
     								</div>
+                                    <div class="row">
+                                        {{#if show }}
+                                        <button class="btn glyphicon glyphicon-comment pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-wrench pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        <button class="btn glyphicon glyphicon-remove pull-right" role="button" id="commentGlyph" onclick="commentBox(this);"></button>
+                                        {{/if}}
+                                    </div>
                                 </div><hr/>
                             {{/each}}
                         </div>

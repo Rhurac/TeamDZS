@@ -75,8 +75,12 @@ app.post("/questions/:courseID", noGuests, questions.create);
 Comment Routes
 */
 var comments = require("./controllers/comments");
-app.post("/questions/:questionID/comments", noGuests,comments.create);
-app.get("/questions/:questionID/comments/:commentID/delete",noGuests,comments.delete);
+app.post("/comments/:questionID",  comments.create);
+app.post("/comments/:commentID/update", comments.update);
+app.get("/comments/:commentID/delete",comments.delete);
+app.get("/comments/:commentID", comments.show);
+
+// ExpressHandlebars.registerHelper('equal', );
 //app.get('/test', comments.new);
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');

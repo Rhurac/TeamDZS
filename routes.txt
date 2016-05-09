@@ -28,5 +28,10 @@ Questions (Question controller):
 /questions/:courseID
 
 Comments (Comment controller):
-/questions/:questionID/comments
-/questions/:questionID/comments/:commentID/delete
+POST
+/comments/:questionID
+/comments/:questionID/update
+GET
+/comments/:commentID
+/comments/:commentID/delete
+/comments/:commentID/update

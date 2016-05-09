@@ -3,6 +3,7 @@ var sqlite3 = require('sqlite3'),
     encryption = require('./encryption');
 // Create the database schema and populate
 db.serialize(function() {
+    
   // TABLE USERS: id, username, fname, lname, picture, email, admin, blocked, password_digest, salt
   db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT UNIQUE  COLLATE NOCASE, fname TEXT NOT NULL, lname TEXT NOT NULL, picture TEXT, email TEXT, admin BOOLEAN, blocked BOOLEAN, password_digest TEXT, salt TEXT)");
    // POPULATE USERS **********************************************************************************************************************************

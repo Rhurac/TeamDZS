@@ -108,15 +108,12 @@ class User {
   }
 
   profile(req, res){
-      console.log("(profile())Username: "+req.params.userName);
       let userName = req.params.userName;
       db.get("SELECT * FROM users WHERE username = ?",userName, function(err, user){
          if(err|!user){
              console.error("Error in Users.profile, no user in db:", err);
             return res.render('error/noUser',{layout: "error", message : "No such user exists: "+userName});
          }
-        if(userName)
-        console.log("Username: %s", userName);
 
         let allQuestions = {};
 
@@ -127,12 +124,21 @@ class User {
                     return console.error("Error in user.profile questions",err);
                 }
                 allQuestions = questions;
+                allQuestions.forEach((question)=>{
+                    if(question.author === req.session.username){
+                        question.show = true;
+                    }
+                });
                 db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                     if(err){
                         res.sendStatus(500);
                         return console.error("Error in user.profile comments",err);
                     }
-                    console.log(JSON.stringify(comments));
+                    comments.forEach((comm)=>{
+                        if(comm.userid === req.session.user_id){
+                            comm.show = true;
+                        }
+                    });
                     res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
                 });
             });

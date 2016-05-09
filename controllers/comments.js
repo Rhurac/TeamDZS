@@ -1,30 +1,28 @@
 "use strict"
 var db = require('../db'),
-    formidable = require("formidable");
+    formidable = require("formidable"),
+    session = require("client-sessions");
 
 class Comment{
-
-    new(req, res){
-        res.render("");
-    }
-
     create(req, res){
-        var form = formidable.IncomingForm();
+        var form = new formidable.IncomingForm();
         form.parse(req, (err, fields, files) =>{
             if(err){
                 res.sendStatus(500);
                 return console.error("Error in Comment create.\n",err);
             }
-            db.run("INSERT INTO comments (qId, userId, desc, date) VALUES (?,?,?,CURRENT_TIMESTAMP)",
-                req.params.id,
-                user.id,
-                fields.description,
-            ()=>{
-                res.redirect('back');
+            db.run("INSERT INTO comments (qId, userId, desc, course, repliedTo, date) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)",
+                req.params.questionID,
+                req.session.user_id,
+                fields.comment,
+                fields.course,
+                fields.user,
+            (err, data)=>{
+                if (err) console.error(err);
+                console.log("Made it out of comment/qid POST");
+                return res.redirect('back')
             });
-
         });
-
     }
 
     show(req, res){
@@ -32,7 +30,16 @@ class Comment{
     }
 
     update(req, res){
-
+        var form = new formidable.IncomingForm();
+        form.parse(req, (err, fields, files) =>{
+            if(err) console.error(err);
+            db.run("UPDATE comments SET desc=? WHERE id=?",
+                fields.comment,
+                req.commentID,
+                (err, success)=>{
+                if(err) console.log(err);
+            });
+        });
     }
 
     delete(req, res){
