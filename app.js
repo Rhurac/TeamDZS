@@ -69,15 +69,15 @@ app.get("/users/:userName", users.profile);
 Question Routes
 */
 var questions = require('./controllers/questions');
-app.get("/questions/:courseID", noGuests, questions.new);
-app.post("/questions/:courseID", noGuests, questions.create);
-app.post("/questions/update", questions.update);
+app.get("/questions/:courseID/new", noGuests, questions.new);
+app.post("/questions/:courseID/create", noGuests, questions.create);
 /*
 Comment Routes
 */
 var comments = require("./controllers/comments");
 app.post("/questions/:questionID/comments", noGuests,comments.create);
 app.get("/questions/:questionID/comments/:commentID/delete",noGuests,comments.delete);
+app.post("/comments/update", comments.update);
 //app.get('/test', comments.new);
 app.listen(app.get('port'), function(){
   console.log('Express started. Server listening on port 3000. Press Ctrl-C to terminate');
