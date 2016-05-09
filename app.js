@@ -12,6 +12,7 @@ var express = require('express'),
   http = require('http').Server(app),
   socket = require('socket.io'),
   io = socket.listen(http);
+  // db = require("./database/seed.js");
 
 app.disable('x-powered-by');
 app.engine('handlebars', handlebars.engine);

@@ -103,14 +103,14 @@ class User {
 
   profile(req, res){
       console.log("(profile())Username: "+req.params.userName);
-      let userName = req.params.userName;
+      var userName = req.params.userName;
       db.get("SELECT * FROM users WHERE username = ?",userName, function(err, user){
          if(err|!user){
              console.error("Error in Users.profile, no user in db:", err);
             return res.render('error/noUser',{layout: "error", message : "No such user exists: "+userName});
          }
         if(userName)
-        let allQuestions = {};
+        var allQuestions = {};
 
         db.serialize(function(){
             db.all("SELECT * FROM questions WHERE author=?",userName, function(err, questions){

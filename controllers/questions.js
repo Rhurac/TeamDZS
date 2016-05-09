@@ -42,11 +42,6 @@ class Question{
       });
     });
   }
-
-
-
-
->>>>>>> master
 }
 
 module.exports = exports = new Question();
