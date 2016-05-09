@@ -10,12 +10,23 @@ commbox.classList.add("hidden");
 }
 };
 
-window.preview = function(btn){
+window.previewPost = function(btn){
 var parent = btn.parentElement;
 var commParent = parent.previousSibling;
 var commBox = commParent.firstChild;
 var input = commBox.value;
 commBox.innerHTML = marked(input);
 };
+
+window.deletePost = function(post){
+    alert(post.nodeName);
+};
+
+window.updatePost = function(post){
+alert(post.nodeName);
+};
+
+module.exports['update'] = updatePost;
+module.exports['delete'] = deletePost;
 module.exports['commentBox'] = commentBox;
-module.exports['preview'] = preview;
+module.exports['preview'] = previewPost;

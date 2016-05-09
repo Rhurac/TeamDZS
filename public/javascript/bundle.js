@@ -1291,25 +1291,65 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
 var marked = require('marked');
 
 window.commentBox = function(comm){
-console.log(comm.nodeName);
-var commbox = comm.parentElement.nextElementSibling;
-if(commbox.classList.contains("hidden")){
-commbox.classList.remove("hidden");
+// var commbox = comm.parentElement.nextElementSibling;
+// if(commbox.classList.contains("hidden")){
+// commbox.classList.remove("hidden");
+// }
+// else{
+// commbox.classList.add("hidden");
+// }
+
+var info = comm.id.split("-");
+var hidden = document.getElementById("hidden-"+info[2]);
+if (hidden.classList.contains("hidden")){
+    hidden.classList.remove("hidden");
 }
 else{
-commbox.classList.add("hidden");
+    hidden.classList.add("hidden");
 }
 };
 
-window.preview = function(btn){
-var parent = btn.parentElement;
-console.log(parent.nodeName);
-var commParent = parent.previousSibling;
-var commBox = commParent.firstChild;
-alert(commBox);
-commBox.value = marked(commBox.value);
+window.previewPost = function(btn){
+var info = btn.id.split("-");
+var textArea = document.getElementById("text-area-"+info[2]);
+var previewDiv = document.getElementById("hidden-preview-"+info[2]);
+previewDiv.innerHTML = marked(textArea.value);
+previewDiv.classList.remove("hidden");
 };
+
+window.deletePost = function(post){
+    request = new XMLHttpRequest();
+    request.onreadystatechange = handlePost;
+var info = post.id.split("-");
+switch(info[0]){
+    case 'question':
+        //request.open('GET', '/questions', true);
+
+        break;
+    case 'comment':
+        request.open('GET', '/comments/'+info[2]+'/delete', true);
+        request.send(); 
+        break;
+
+        default:break;
+}
+
+
+function handlePost(){
+    if()
+
+}
+};
+
+
+
+window.updatePost = function(post){
+alert(post.nodeName);
+};
+
+module.exports['update'] = updatePost;
+module.exports['delete'] = deletePost;
 module.exports['commentBox'] = commentBox;
-module.exports['preview'] = preview;
+module.exports['preview'] = previewPost;
 
 },{"marked":1}]},{},[2]);
