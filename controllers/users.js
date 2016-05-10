@@ -154,13 +154,7 @@ class User {
                         else{
                             question.other = true;
                         }
-                        db.all("SELECT * FROM comments WHERE qid=?",question.id,(err, comments)=>{
-                            if(err) return console.err(err);
-                            console.log("question before:%s\n",JSON.stringify(question));
-                            console.log("question comments:%s\n",JSON.stringify(comments));
-                            question.comments = comments;
-                            console.log("question after:%s\n",JSON.stringify(question));
-                        });
+                    
                 });
                 res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
             });

@@ -19,8 +19,7 @@ class Comment{
                 fields.user,
             (err, data)=>{
                 if (err) console.error(err);
-                console.log("Made it out of comment/qid POST");
-                return res.redirect('back')
+                return res.redirect('back');
             });
         });
     }
@@ -33,7 +32,6 @@ class Comment{
                     comment.show = true;
                 }
             });
-            console.log("in allComments: %s",JSON.stringify(comments));
             return res.render("comments/forQuestions", {layout:"comments", comments: comments});
         });
     }
