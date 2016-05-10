@@ -42,6 +42,9 @@
                     <br />
                     {{desc}}
                   </div>
+                  <div class="well">
+                    {{displayComments this}}
+                  </div>
                   <div class="author pull-right">Author: {{author}}</div>
                   <br />
               </div>
@@ -126,4 +129,22 @@
     $("#answerQuestionForm").append("<textarea id='hidden_id' name='qid' type='text' class='form-control hidden'>" + qid + "</textarea>");
     $("#answerQuestionForm").append("<textarea name='repliedTo' class='form-control hidden'>" + repliedTo + "</textarea>");
   }
+</script>
+
+<!-- <script>
+  $("document").ready(function(){
+    var source = $("#page-template").html();
+    var template = Handlebars.compile(source);
+    alert("foo");
+    var context = {
+      body: "Some arbitrary content",
+      comments: [
+        "First comment",
+        "Second comment",
+        "Third comment"
+      ]
+    };
+    var html = template(context);
+    $(document.body).html(html);
+  });
 </script>
