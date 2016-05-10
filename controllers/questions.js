@@ -11,7 +11,7 @@ class Question{
     var courseID = "CIS "+req.params.courseID;
     var redirectID = "CIS"+req.params.courseID;
     form.parse(req, function(err, fields, files){
-      console.log(fields);
+      //console.log(fields);
       if(err) res.sendStatus(500);
       db.run("INSERT INTO QUESTIONS (course, desc, shortdesc, date, author, numOfReviews) VALUES (?,?,?,CURRENT_TIMESTAMP,?,?)",
       courseID,
@@ -43,6 +43,14 @@ class Question{
         });
       });
     });
+  }
+
+
+  delete(req, res){
+      db.run("DELETE FROM questions WHERE id=?", req.params.questionID, (err)=>{
+         if(err) return console.error(err);
+        res.redirect('back');
+      });
   }
 }
 

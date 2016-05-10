@@ -19,8 +19,8 @@ class Comment{
                 fields.user,
             (err, data)=>{
                 if (err) console.error(err);
-                console.log("Made it out of comment/qid POST");
-                return res.redirect('back')
+
+                return res.redirect('back');
             });
         });
     }
@@ -32,12 +32,11 @@ class Comment{
                 if(comment.userid === req.session.user_id){
                     comment.show = true;
                 }
-
-                console.log(JSON.stringify(comments));
-                return;
+                else{
+                    comment.other = true;
+                }
             });
-
-            return res.render("comments/forQuestions",{layout:"comments", comments:comments});
+            return res.render("comments/forQuestions", {layout:"comments", comments: comments});
         });
     }
 

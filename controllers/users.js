@@ -2,7 +2,8 @@
 var db = require('../db'),
   formidable = require('formidable'),
   encryption = require("../database/encryption"),
-  fs = require("fs-extra");
+  fs = require("fs-extra"),
+  http = require('http');
 
 class User {
 
@@ -117,14 +118,6 @@ class User {
                     return console.error("Error in user.profile questions",err);
                 }
                 allQuestions = questions;
-                allQuestions.forEach((question)=>{
-                    if(question.author === req.session.username){
-                        question.show = true;
-                    }
-                    else{
-                        question.other = true;
-                    }
-                });
                 db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                     if(err){
                         res.sendStatus(500);
@@ -135,12 +128,24 @@ class User {
                             comm.show = true;
                         }
                     });
-                    res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
+
+                    allQuestions.forEach((question)=>{
+                        if(question.author === req.session.username){
+                            question.show = true;
+                        }
+                        else{
+                            question.other = true;
+                        }
                 });
-            });
+
+                res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
         });
+
       });
-  }
+  });
+});
+}
+
 }
 
 module.exports = exports = new User();
