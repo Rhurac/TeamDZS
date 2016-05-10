@@ -3,17 +3,17 @@
   app = express(),
   db = require("./db"),
   hbs = exphbs.create({
-    defaultLayout: "main",
-    helpers: {
-      displayComments: function(context){
-        db.run("SELECT * FROM comments WHERE qid = ?", context.id, function(err, comments){
-          if (err) return console.error(err, "Error while querying table comments");
-          console.log(db);
-          console.log(context.id);
-          console.log(comments);
-        });
-      }
-    }
+    defaultLayout: "main"
+    // helpers: {
+    //   displayComments: function(context){
+    //     db.run("SELECT * FROM comments WHERE qid = ?", context.id, function(err, comments){
+    //       if (err) return console.error(err, "Error while querying table comments");
+    //       // console.log(db);
+    //       // console.log(context.id);
+    //       // console.log(comments);
+    //     });
+      // }
+    // }
   });
   var path = require('path'),
   favicon = require('serve-favicon'),
@@ -52,9 +52,9 @@ var index = require('./controllers/index');
 //post for login.
 app.get('/login', index.landing);
 app.get('/', index.landing);
-app.get('/home', collateFilteredQuestions, index.home);
-app.get('/about', index.about);
-app.get('/contact', index.contact);
+app.get('/home', noGuests, collateFilteredQuestions, index.home);
+app.get('/about', noGuests, index.about);
+app.get('/contact', noGuests, index.contact);
 
 /*
 Session Routes
@@ -68,7 +68,7 @@ app.get("/sessions/delete", sessions.delete);
 Chat Routes
 */
 var chat = require('./controllers/chat');
-app.get("/chat", chat.chat);
+app.get("/chat",noGuests, chat.chat);
 io.sockets.on('connection', function(socket) {
   console.log('User connected');
   socket.on('send message', function(data){
@@ -101,6 +101,7 @@ app.get("/questions/:questionID/delete", noGuests, questions.delete);
 Comment Routes
 */
 var comments = require("./controllers/comments");
+app.post("/comments/update", comments.update);
 app.post("/comments/:questionID", noGuests, comments.create);
 app.post("/comments/:commentID/update", noGuests, comments.update);
 app.get("/comments/:commentID/delete", noGuests, comments.delete);

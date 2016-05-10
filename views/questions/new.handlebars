@@ -42,9 +42,24 @@
                     <br />
                     {{desc}}
                   </div>
-                  <div class="well">
-                    {{displayComments this}}
+                  <div id="commentForQuestion_{{id}}" class="well">
                   </div>
+                  <script>
+                          var comms = document.getElementById('commentForQuestion_{{id}}');
+                          console.log("{{id}}");
+                          var request = new XMLHttpRequest();
+                          request.open("GET","/comments/{{id}}");
+                          request.onreadystatechange = function(){
+                            // alert(request.responseText);
+                            // alert("foo");
+                              if(request.readyState === 4 && request.status === 200){
+                                // alert("bar");
+                                // alert(request.responseText);
+                                  comms.innerHTML = request.responseText;
+                              }
+                          };
+                          request.send();
+                  </script>
                   <div class="author pull-right">Author: {{author}}</div>
                   <br />
               </div>
@@ -130,6 +145,8 @@
     $("#answerQuestionForm").append("<textarea name='repliedTo' class='form-control hidden'>" + repliedTo + "</textarea>");
   }
 </script>
+
+
 
 <!-- <script>
   $("document").ready(function(){

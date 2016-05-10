@@ -26,6 +26,8 @@ class Comment{
 
     allComments(req, res){
         db.all("SELECT * FROM comments WHERE qid=?", req.params.questionID, (err, comments)=>{
+          console.log(req.params.questionID);
+          console.log(comments);
             if(err){res.sendStatus(500); console.error(err);}
             comments.forEach((comment)=>{
                 if(comment.userid === req.session.user_id){
@@ -40,22 +42,11 @@ class Comment{
     }
 
     update(req, res){
-        // var form = new formidable.IncomingForm();
-        // form.parse(req, (err, fields, files) =>{
-        //     if(err) return console.error(err);
-        //     db.run("UPDATE comments SET desc=? WHERE id=?",
-        //         fields.comment,
-        //         req.commentID,
-        //         (err, success)=>{
-        //         if(err) return console.log(err);
-        //         res.redirect('back');
-        //     });
-        // });
 
+      console.log("foo1");
       var form = formidable.IncomingForm();
       form.parse(req, function(err, fields, files){
         if (err) return console.error(err, "Unable to retrieve incoming form");
-        console.log(fields);
         var id = fields.id;
         var answer = fields.answer;
         db.run("INSERT INTO comments (qid, userid, desc, course, repliedTo, date) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)",
@@ -67,7 +58,7 @@ class Comment{
           function(err){
             if (err) return console.error(err, "Unable to insert data into table comments");
             var url = "/questions/CIS" + fields.course.split(" ")[1] + "/new";
-            res.redirect(url);
+            res.redirect("back");
           });
       });
 
