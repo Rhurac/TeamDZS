@@ -5,6 +5,7 @@ var formidable = require('formidable');
 class Question{
 
   create(req, res){
+    console.log("foo");
     var form = formidable.IncomingForm();
     var fields = res.locals.fields;
     var url = req.url;
