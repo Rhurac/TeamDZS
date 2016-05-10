@@ -78,7 +78,7 @@ default: #fff */
         margin-bottom:8px;
     }
     .comments-under{
-        margin:0;
+        margin:auto 0;
         padding:0;
         max-width:100%;
         max-height:100%;
@@ -95,6 +95,11 @@ default: #fff */
         padding:0;
         margin:0 auto;
         border:none;
+
+    }
+
+    .comment-info > span{
+        padding:10px 0 10px 0;
     }
     div.comments{
         margin:3px auto;
@@ -108,13 +113,48 @@ default: #fff */
         max-width:100%;
         max-height:100%;
     }
-    .comments-under-questions{
+    .list-group-item.row.comments-under-questions{
         max-width:100%;
         max-height:100%;
         padding:0;
         margin:0;
         margin-top:20px;
+        padding-top:15px;
         border:none;
+        border-top:1px solid #5a2b81;
+        border-radius:0;
+    }
+    .list-group-item.row.comments-under{
+        margin:15px 0;
+        padding:0;
+        border-radius:0;
+        border:none;
+        border-top:1px solid;
+        border-bottom:1px solid;
+        border-color:#919194;
+    }
+
+    div.row.comments-under > div.question-comment-buttons > .profileGlyph{
+        font-size:15px;
+        margin:0;
+    }
+
+    div.row.comments-under > div.row.question-comment-buttons{
+        /*font-size:15px;*/
+        margin:0;
+    }
+
+    .question-comment-info{
+        /*border-top:1px solid #5a2b81;*/
+        /*border-bottom:1px solid #5a2b81;*/
+        margin:5px 0;
+        padding:0;
+    }
+    .question-comment-description{
+
+    }
+    .question-comment-buttons{
+
     }
 
 @media all and (max-width: 480px){

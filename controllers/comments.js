@@ -31,6 +31,9 @@ class Comment{
                 if(comment.userid === req.session.user_id){
                     comment.show = true;
                 }
+                else{
+                    comment.other = true;
+                }
             });
             return res.render("comments/forQuestions", {layout:"comments", comments: comments});
         });
