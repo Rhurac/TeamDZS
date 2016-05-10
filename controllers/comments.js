@@ -19,6 +19,7 @@ class Comment{
                 fields.user,
             (err, data)=>{
                 if (err) console.error(err);
+
                 return res.redirect('back');
             });
         });

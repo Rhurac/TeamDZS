@@ -129,6 +129,7 @@ class User {
                             comm.show = true;
                         }
                     });
+
                     allQuestions.forEach((question)=>{
                         if(question.author === req.session.username){
                             question.show = true;
@@ -136,13 +137,14 @@ class User {
                         else{
                             question.other = true;
                         }
-
                 });
+
                 res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
-            });
         });
+
       });
-  }
+  });
+}
 }
 
 module.exports = exports = new User();
