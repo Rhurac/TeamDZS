@@ -1,16 +1,19 @@
 {{#each comments}}
+
 <div class="list-group-item row comments-under">
     <div class="row text-center question-comment-info">
         <span class="col-md-3 ">In: <a href="/questions/{{course}}">{{course}}</a></span>
         <span class="col-md-4 ">To: <a href="/users/{{repliedTo}}">{{repliedTo}}</a></span>
         <span class="col-md-5 col-xs-5">{{date}}</span>
     </div>
+
     {{#if other}}
     <div class="row text-center question-comment-description">
         <div class="col-md-12 center-block">
             <i><p>{{desc}}</p></i>
         </div>
     </div>
+
     {{/if}}
     {{#if show}}
     <div class="row text-center question-comment-description">

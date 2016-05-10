@@ -34,6 +34,7 @@ default: #fff */
         border-radius:8px;
     }
 
+
     textarea.form-control.comment-box{
         margin-top:20px;
         margin-bottom:10px;
@@ -45,7 +46,6 @@ default: #fff */
         background:inherit;
         text-decoration:none;
         padding:0 10px 0 12px;
-        /*color:#fff;*/
     }
     .profileGlyph:hover{
         background-color:auto;
@@ -88,6 +88,7 @@ default: #fff */
         margin-bottom:0;
     }
 
+
     div#question-comments{
         /*border:1px solid red;*/
         max-width:100%;
@@ -95,9 +96,7 @@ default: #fff */
         padding:0;
         margin:0 auto;
         border:none;
-
     }
-
     .comment-info > span{
         padding:10px 0 10px 0;
     }
@@ -156,6 +155,7 @@ default: #fff */
     .question-comment-buttons{
 
     }
+
 
 @media all and (max-width: 480px){
     #comment-info, #question-info{

@@ -118,24 +118,6 @@ class User {
                     return console.error("Error in user.profile questions",err);
                 }
                 allQuestions = questions;
-                    // var options = {
-                    //                 host: 'http://localhost:',
-                    //                 port: 3000,
-                    //                 path: '/comments/'+question.id
-                    //               };
-                    // var req = http.get(options, function(response) {
-                    //   // handle the response
-                    //   var res_data = '';
-                    //   response.on('data', function(chunk) {
-                    //     res_data += chunk;
-                    //   });
-                    //   response.on('end', function() {
-                    //     console.log("Get request: %s",JSON.stringify(res_data));
-                    //   });
-                    // });
-                    // req.on('error', function(e) {
-                    //   console.log("Got error: " + e.message);
-                    // });
                 });
                 db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                     if(err){
@@ -147,6 +129,7 @@ class User {
                             comm.show = true;
                         }
                     });
+
                     allQuestions.forEach((question)=>{
                         if(question.author === req.session.username){
                             question.show = true;
@@ -154,13 +137,14 @@ class User {
                         else{
                             question.other = true;
                         }
-                    
                 });
+
                 res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
-            });
         });
+
       });
-  }
+  });
+}
 }
 
 module.exports = exports = new User();

@@ -1291,7 +1291,6 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
 var marked = require('marked');
 
 window.commentBox = function(comm){
-
 var info = comm.id.split("-");
 var hidden = document.getElementById("hidden-"+info[2]);
 if (hidden.classList.contains("hidden")){
@@ -1312,10 +1311,8 @@ previewDiv.classList.remove("hidden");
 
 window.deletePost = function(post){
 var request = new XMLHttpRequest();
-
 var info = post.id.split("-");
 request.onreadystatechange = handlePost(info);
-
 switch(info[0]){
     case 'question':
         request.open('GET', '/questions/'+info[2]+'/delete', true);
@@ -1330,24 +1327,7 @@ switch(info[0]){
 }
 
 
-function handlePost(inf){
-    console.log(inf.toString());
-    if(request.readyState === XMLHttpRequest.DONE){
-        if(request.status === 200){
-            if(inf[0] === 'comment'&& inf[1] === 'delete')
-            {
-                var comments = document.getElementById('comment-display');
-                var comment = document.getElementById('comment-display-'+inf[2]);
-                comments.removeChild(comment);
-            }
 
-        }
-        else{
-            console.log('problem instead.');
-        }
-    }
-
-}
 };
 
 
