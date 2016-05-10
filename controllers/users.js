@@ -2,7 +2,8 @@
 var db = require('../db'),
   formidable = require('formidable'),
   encryption = require("../database/encryption"),
-  fs = require("fs-extra");
+  fs = require("fs-extra"),
+  http = require('http');
 
 class User {
 
@@ -117,13 +118,24 @@ class User {
                     return console.error("Error in user.profile questions",err);
                 }
                 allQuestions = questions;
-                allQuestions.forEach((question)=>{
-                    if(question.author === req.session.username){
-                        question.show = true;
-                    }
-                    else{
-                        question.other = true;
-                    }
+                    // var options = {
+                    //                 host: 'http://localhost:',
+                    //                 port: 3000,
+                    //                 path: '/comments/'+question.id
+                    //               };
+                    // var req = http.get(options, function(response) {
+                    //   // handle the response
+                    //   var res_data = '';
+                    //   response.on('data', function(chunk) {
+                    //     res_data += chunk;
+                    //   });
+                    //   response.on('end', function() {
+                    //     console.log("Get request: %s",JSON.stringify(res_data));
+                    //   });
+                    // });
+                    // req.on('error', function(e) {
+                    //   console.log("Got error: " + e.message);
+                    // });
                 });
                 db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                     if(err){
@@ -135,8 +147,22 @@ class User {
                             comm.show = true;
                         }
                     });
-                    res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
+                    allQuestions.forEach((question)=>{
+                        if(question.author === req.session.username){
+                            question.show = true;
+                        }
+                        else{
+                            question.other = true;
+                        }
+                        db.all("SELECT * FROM comments WHERE qid=?",question.id,(err, comments)=>{
+                            if(err) return console.err(err);
+                            console.log("question before:%s\n",JSON.stringify(question));
+                            console.log("question comments:%s\n",JSON.stringify(comments));
+                            question.comments = comments;
+                            console.log("question after:%s\n",JSON.stringify(question));
+                        });
                 });
+                res.render('users/profile', {user : user, questions: allQuestions, comments: comments});
             });
         });
       });

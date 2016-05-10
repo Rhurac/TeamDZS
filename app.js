@@ -81,6 +81,7 @@ Question Routes
 var questions = require('./controllers/questions');
 app.get("/questions/:courseID/new", noGuests, questions.new);
 app.post("/questions/:courseID/create", noGuests, questions.create);
+app.get("/questions/:questionID/delete", noGuests, questions.delete);
 
 /*
 Comment Routes

@@ -32,12 +32,9 @@ class Comment{
                 if(comment.userid === req.session.user_id){
                     comment.show = true;
                 }
-
-                console.log(JSON.stringify(comments));
-                return;
             });
-
-            return res.render("comments/forQuestions",{layout:"comments", comments:comments});
+            console.log("in allComments: %s",JSON.stringify(comments));
+            return res.render("comments/forQuestions", {layout:"comments", comments: comments});
         });
     }
 

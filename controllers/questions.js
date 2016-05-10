@@ -44,6 +44,14 @@ class Question{
       });
     });
   }
+
+
+  delete(req, res){
+      db.run("DELETE FROM questions WHERE id=?", req.params.questionID, (err)=>{
+         if(err) return console.error(err);
+        res.redirect('back'); 
+      });
+  }
 }
 
 module.exports = exports = new Question();

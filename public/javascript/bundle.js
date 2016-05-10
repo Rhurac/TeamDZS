@@ -1291,13 +1291,6 @@ if (typeof module !== 'undefined' && typeof exports === 'object') {
 var marked = require('marked');
 
 window.commentBox = function(comm){
-// var commbox = comm.parentElement.nextElementSibling;
-// if(commbox.classList.contains("hidden")){
-// commbox.classList.remove("hidden");
-// }
-// else{
-// commbox.classList.add("hidden");
-// }
 
 var info = comm.id.split("-");
 var hidden = document.getElementById("hidden-"+info[2]);
@@ -1318,25 +1311,41 @@ previewDiv.classList.remove("hidden");
 };
 
 window.deletePost = function(post){
-    request = new XMLHttpRequest();
-    request.onreadystatechange = handlePost;
+var request = new XMLHttpRequest();
+
 var info = post.id.split("-");
+request.onreadystatechange = handlePost(info);
+
 switch(info[0]){
     case 'question':
-        //request.open('GET', '/questions', true);
-
+        request.open('GET', '/questions/'+info[2]+'/delete', true);
+        request.send();
         break;
     case 'comment':
         request.open('GET', '/comments/'+info[2]+'/delete', true);
-        request.send(); 
+        request.send();
         break;
 
         default:break;
 }
 
 
-function handlePost(){
-    if()
+function handlePost(inf){
+    console.log(inf.toString());
+    if(request.readyState === XMLHttpRequest.DONE){
+        if(request.status === 200){
+            if(inf[0] === 'comment'&& inf[1] === 'delete')
+            {
+                var comments = document.getElementById('comment-display');
+                var comment = document.getElementById('comment-display-'+inf[2]);
+                comments.removeChild(comment);
+            }
+
+        }
+        else{
+            console.log('problem instead.');
+        }
+    }
 
 }
 };
