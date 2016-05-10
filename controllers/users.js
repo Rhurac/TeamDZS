@@ -118,6 +118,7 @@ class User {
                     return console.error("Error in user.profile questions",err);
                 }
                 allQuestions = questions;
+                });
                 db.all("SELECT * FROM comments WHERE userid=?",user.id, function(err, comments){
                     if(err){
                         res.sendStatus(500);
