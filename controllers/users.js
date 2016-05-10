@@ -144,9 +144,7 @@ class User {
 
       });
   });
-});
 }
-
 }
 
 module.exports = exports = new User();
